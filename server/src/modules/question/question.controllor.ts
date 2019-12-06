@@ -12,17 +12,18 @@ export class QuestionControllor {
 
   @Post('add')
   async add(@Body() question: QuestionEntity) {
-    if (!question.surveyId) {
-      throw new HttpException(`缺少问卷Id`, 200);
+    console.log(question)
+    const { options, questionType } = question
+    // 输入项问题
+    if (questionType === 3) {
+      return await this.questionService.add(question)
     }
-    let options = question.options
-    // delete question['options']
-    const qRes = await this.questionService.add(question)
-    let { questionId } = qRes
-    options.map(item => {
-      item['questionId'] = questionId
-    })
-    await this.optionService.add(options)
-    return { attr: { questionId }, message: '新增成功' }
+    // 选择题
+    if (options.length < 2) {
+      throw new HttpException(`选择题至少该有2个选项`, 200);
+    }
+    const optionRes = await this.optionService.add(options)
+    question.options = optionRes
+    return await this.questionService.add(question)
   }
 }

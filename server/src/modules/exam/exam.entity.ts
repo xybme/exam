@@ -1,5 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, CreateDateColumn, OneToMany, Column} from "typeorm";
-
+import {Entity, PrimaryGeneratedColumn, JoinTable, ManyToMany, Column} from "typeorm";
+import { QuestionEntity } from '../question/question.entity'
 @Entity('exam')
 export class ExamEntity {
 
@@ -15,4 +15,7 @@ export class ExamEntity {
   @Column({ type: 'datetime', comment: '创建时间', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
+  @ManyToMany(type => QuestionEntity)
+  @JoinTable()
+  questions: QuestionEntity[];
 }

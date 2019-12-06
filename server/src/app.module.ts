@@ -8,8 +8,9 @@ import { DB_CONFIG } from '@/app.config'
 // 模块
 // import { UserModule } from './modules/user/user.module';
 // import { SurveyModule } from './modules/exam/survey.module';
-// import { QuestionModule } from './modules/question/question.module';
-// import { OptionModule } from './modules/option/option.module';
+import { PositionModule } from './modules/position/postion.module'
+import { QuestionModule } from './modules/question/question.module';
+import { OptionModule } from './modules/option/option.module';
 // import { AuthModule } from './modules/auth/auth.module';
 @Module({
   imports: [
@@ -20,9 +21,10 @@ import { DB_CONFIG } from '@/app.config'
       synchronize: true,
     }),
     // UserModule,
-    // QuestionModule,
+    PositionModule,
+    QuestionModule,
+    OptionModule,
     // SurveyModule,
-    // OptionModule,
     // AuthModule
   ],
   controllers: [AppController],

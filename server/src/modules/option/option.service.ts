@@ -15,10 +15,4 @@ export class OptionService {
   async add(options: OptionEntity[]) {
     return await this.optionEntity.save(options)
   }
-  // 增加计数
-  addCount(optionIds: Array<number>): void {
-    optionIds.forEach(optionId => {
-      this.optionEntity.increment({ optionId }, 'count', 1)
-    })
-  }
 }

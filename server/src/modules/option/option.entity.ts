@@ -1,6 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'
 import { QuestionEntity } from '../question/question.entity'
-
+/**
+ * 选项表
+ */
 @Entity('exam_option')
 export class OptionEntity {
 
