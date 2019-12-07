@@ -1,6 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany} from 'typeorm'
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm'
 import { OptionEntity } from '../option/option.entity'
-import { PositionEntity } from '../position/position.entity'
+import { entityDatePipe } from '@/utils/time.format'
 /**
  * 问题表
  */
@@ -19,6 +19,9 @@ export class QuestionEntity {
   @OneToMany(type => OptionEntity, option => option.question)
   options: OptionEntity[];
 
-  @ManyToOne(type => PositionEntity, position => position.questions)
-  position: PositionEntity;
+  @Column({type: 'smallint', comment: '所属职位'})
+  positionId: number;
+
+  @Column({ type: 'datetime', comment: '创建时间', default: () => 'CURRENT_TIMESTAMP', transformer: entityDatePipe })
+  createTime: Date;
 }

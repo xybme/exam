@@ -7,7 +7,7 @@ import { Connection } from 'typeorm';
 import { DB_CONFIG } from '@/app.config'
 // 模块
 // import { UserModule } from './modules/user/user.module';
-// import { SurveyModule } from './modules/exam/survey.module';
+import { ExamModule } from './modules/exam/exam.module';
 import { PositionModule } from './modules/position/postion.module'
 import { QuestionModule } from './modules/question/question.module';
 import { OptionModule } from './modules/option/option.module';
@@ -21,10 +21,10 @@ import { OptionModule } from './modules/option/option.module';
       synchronize: true,
     }),
     // UserModule,
+    ExamModule,
     PositionModule,
     QuestionModule,
     OptionModule,
-    // SurveyModule,
     // AuthModule
   ],
   controllers: [AppController],

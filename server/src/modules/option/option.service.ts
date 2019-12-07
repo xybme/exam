@@ -11,7 +11,7 @@ export class OptionService {
     @InjectRepository(OptionEntity)
     private readonly optionEntity: Repository<OptionEntity>
   ) { }
-  // 新增
+  /**新增 */
   async add(options: OptionEntity[]) {
     return await this.optionEntity.save(options)
   }

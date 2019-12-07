@@ -1,10 +1,10 @@
-import {Entity, PrimaryGeneratedColumn, JoinTable, ManyToMany, Column} from "typeorm";
-import { QuestionEntity } from '../question/question.entity'
+import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import { entityDatePipe } from '@/utils/time.format'
 @Entity('exam')
 export class ExamEntity {
 
   @PrimaryGeneratedColumn()
-  id: number;
+  examId: number;
 
   @Column({type: 'varchar', length: 20, comment: '试卷名'})
   examName: string;
@@ -12,10 +12,13 @@ export class ExamEntity {
   @Column({type: 'varchar', length: 100, default: '', comment: '描述'})
   describe : string;
 
-  @Column({ type: 'datetime', comment: '创建时间', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
+  @Column({type: 'varchar', length: 20, comment: '问题集合，逗号分割'})
+  questionIds: string;
 
-  @ManyToMany(type => QuestionEntity)
-  @JoinTable()
-  questions: QuestionEntity[];
+  @Column({ type: 'varchar', length: 20, default: '', comment: '创建人'})
+  createBy: string;
+
+  @Column({ type: 'datetime', comment: '创建时间', default: () => 'CURRENT_TIMESTAMP', transformer: entityDatePipe })
+  createTime: Date;
+
 }

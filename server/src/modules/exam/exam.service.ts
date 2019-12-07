@@ -3,38 +3,33 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ExamEntity } from './exam.entity';
 import { filterParam } from '../../utils/filter.param'
-import { CreateSurveyDto, UpdateSurveyDto } from './exam.dto'
+import { CreateExamDto } from './exam.dto'
 
 @Injectable()
 export class ExamService {
   constructor(
     @InjectRepository(ExamEntity)
-    private readonly ExamEntity: Repository<ExamEntity>
+    private readonly examEntity: Repository<ExamEntity>
   ) { }
-  // 查询
-  async find(param): Promise<ExamEntity[]> {
-    console.log(`survey服务`)
-    return await this.ExamEntity.find({
-      where: filterParam(param, ['surveyId', 'surveyName', 'status'])
-    });
+
+  async findAll(): Promise<ExamEntity[]> {
+    return await this.examEntity.find()
   }
-  // 新增
-  async add(survey: CreateSurveyDto): Promise<ExamEntity> {
-    return await this.ExamEntity.save(survey)
+  async add(exam: CreateExamDto): Promise<ExamEntity> {
+    return await this.examEntity.save(exam)
   }
   // 更新
-  async update(survey: UpdateSurveyDto): Promise<Boolean> {
-    await this.ExamEntity.update(survey.surveyId, survey)
-    return true
-  }
-  // 查询一个
-  async findOne(surveyId: number): Promise<ExamEntity> {
-    let survey = await this.ExamEntity.findOne({
-      relations: ['questions', 'questions.options'],
-      where: { surveyId }
+  // async update(survey: UpdateSurveyDto): Promise<Boolean> {
+  //   await this.examEntity.update(survey.surveyId, survey)
+  //   return true
+  // }
+  
+  async findOne(examId: number): Promise<ExamEntity> {
+    let res = await this.examEntity.findOne({
+      where: { examId }
     });
     // 没查到返回undefined
-    if (survey) return survey
+    if (res) return res
     throw new HttpException(`无此Id`, 200);
   }
 }

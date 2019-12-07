@@ -11,25 +11,18 @@ export class PositionService {
     @InjectRepository(PositionEntity)
     private readonly positionEntity: Repository<PositionEntity>
   ) { }
-  /**
-   * 新增
-   * @param position 
-   */
+  
+  /**新增 */
   async add(position: PositionEntity) {
     return await this.positionEntity.save(position)
   }
 
-  /**
-   * 查询所有
-   */
+  /**查询所有 */
   async findAll() {
     return await this.positionEntity.find()
   }
 
-  /**
-   * 更新
-   * @param position 
-   */
+  /**更新 */
   async update(position: PositionEntity): Promise<Boolean> {
     await this.positionEntity.update(position.id, position)
     return true

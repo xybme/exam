@@ -7,11 +7,9 @@ import { QuestionEntity } from '../question/question.entity'
 export class PositionEntity {
 
   @PrimaryGeneratedColumn()
-  id: number;
+  positionId: number;
 
   @Column({type: 'varchar', length: 20, comment: '职位名称'})
   positionName: string;
 
-  @OneToMany(type => QuestionEntity, question => question.position)
-  questions: QuestionEntity[];
 }

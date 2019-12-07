@@ -7,7 +7,7 @@ import { QuestionEntity } from '../question/question.entity'
 export class OptionEntity {
 
   @PrimaryGeneratedColumn()
-  id: number;
+  optionId: number;
 
   @Column({ type: 'varchar', length: 50, comment: '选项值' })
   optionName: string;

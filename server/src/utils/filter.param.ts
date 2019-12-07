@@ -9,3 +9,14 @@ export function filterParam(param, condition) {
   }
   return where
 }
+/**
+ * 
+ * @param param 返回分页参数
+ */
+export function filterPage(param) {
+  const { everyPage, currentPage } = param
+  return {
+    everyPage: Number(everyPage || 10),
+    currentPage: Number(currentPage || 1)
+  }
+}

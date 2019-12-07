@@ -1,19 +1,11 @@
-import { IsNotEmpty, IsNumber, IsNumberString, Length } from 'class-validator';
+import { IsNotEmpty, Length, IsString } from 'class-validator';
 
-class BaseSurvey {
-  describe: string;
-  status: number;
-}
-
-export class CreateSurveyDto extends BaseSurvey {
+export class CreateExamDto {
   @IsNotEmpty()
-  @Length(5, 20)
-  surveyName: string;
-}
+  @Length(2, 20)
+  examName: string;
 
-export class UpdateSurveyDto extends BaseSurvey {
-  @IsNumber()
-  surveyId: number;
-
-  surveyName: string;
+  @IsNotEmpty()
+  @IsString()
+  questionIds: string;
 }
