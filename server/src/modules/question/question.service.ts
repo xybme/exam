@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { QuestionEntity } from './question.entity';
 import { CreateQuestionDto } from './question.dto'
 
-
 @Injectable()
 export class QuestionService {
   constructor(
@@ -28,7 +27,7 @@ export class QuestionService {
  
   /**查询一组问题包括他们的选项 */
   async findByIds(ids: any[]) {
-    return this.questionEntity.findByIds(ids, {
+    return await this.questionEntity.findByIds(ids, {
       relations: ['options'],
     })
   }

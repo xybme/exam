@@ -14,7 +14,6 @@ export class QuestionControllor {
   /**新建问题，先存选项，再存问题 */
   @Post('add')
   async add(@Body() question: CreateQuestionDto) {
-    console.log(question)
     const { options, questionType } = question
     // 输入项问题
     if (questionType === 3) {
