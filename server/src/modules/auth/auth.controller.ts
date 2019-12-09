@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Post, Res, Body } from '@nestjs/common';
+import { Controller, Get, UseGuards, Post, Res, HttpException, Body } from '@nestjs/common';
 import { Response } from 'express'
 import { Length, IsString, IsMobilePhone } from 'class-validator';
 import { AuthService } from './auth.service';
@@ -20,6 +20,12 @@ export class AuthController {
   // 登录 在头部返回token
   @Post('login')
   async login(@Body() account: AccountDto, @Res() res:Response): Promise<any> {
+    if (!['18398101098'].includes(account.telephone)){
+      throw new HttpException(`手机号错误`, 200);
+    }
+    if (!['123456'].includes(account.password)){
+      throw new HttpException(`密码错误`, 200);
+    }
     let tokenObj = await this.authService.createToken(account.telephone);
     res.setHeader('token', tokenObj.accessToken)
     res.send({

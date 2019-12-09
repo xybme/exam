@@ -14,6 +14,7 @@ class App extends Component {
 
   config = {
     pages: [
+      'views/login',
       'views/positionCfg',
       'views/questionList',
       'views/exam',

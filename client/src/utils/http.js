@@ -4,9 +4,9 @@ export const API = process.env.NODE_ENV === 'development' ? 'http://192.168.50.1
 
 export default function fetch(options) {
   const { url, data = {}, method = 'POST', showToast = true, showLoading = false } = options
-  // const token = Taro.getStorageSync('token')
+  const token = Taro.getStorageSync('token')
   const header = {}
-  // token && (data['token'] = token)
+  token && (header['token'] = token)
   if (method === 'POST') {
     header['content-type'] = 'application/x-www-form-urlencoded'
   }
@@ -24,6 +24,20 @@ export default function fetch(options) {
     header
   }).then(res => {
     showLoading && Taro.hideLoading()
+    if (res.statusCode === 401) {
+      Taro.showModal({
+        title: '提示',
+        content: '登录失效请重新登录',
+        showCancel: false
+      }).then(() => {
+        Taro.navigateTo({ url: '/views/login' })
+      })
+      return Promise.reject({ message: '登录失效' })
+    }
+    const newToken = res.header.token
+    if (newToken) {
+      Taro.setStorageSync('token', newToken)
+    }
     const response = res.data
     if (!response.success) {
       return Promise.reject(response)

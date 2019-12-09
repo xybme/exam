@@ -11,7 +11,7 @@ import { PositionModule } from './modules/position/postion.module'
 import { QuestionModule } from './modules/question/question.module';
 import { OptionModule } from './modules/option/option.module';
 import { ResultModule } from './modules/result/result.module';
-// import { AuthModule } from './modules/auth/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -25,7 +25,7 @@ import { ResultModule } from './modules/result/result.module';
     QuestionModule,
     OptionModule,
     ResultModule,
-    // AuthModule
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
