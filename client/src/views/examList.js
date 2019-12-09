@@ -30,6 +30,10 @@ export default class Index extends Component {
 
   componentDidHide () { }
 
+  showQrCode () {
+    
+  }
+
   queryExamList () {
     Taro.fetch({
       url: '/exam/list',
@@ -48,6 +52,7 @@ export default class Index extends Component {
         <AtList>
           { examList.map((item, index) => (
             <AtListItem 
+              onClick={this.showQrCode.bind(this)}
               key={index}
               title={item.examName} 
               note={item.createTime}

@@ -8,7 +8,7 @@ export default class Index extends Component {
   state = {
     show: false,
     menus: ['职位配置', '题目配置', '试卷'],
-    urlArr: ['positionCfg', 'questionList', 'exam']
+    urlArr: ['positionCfg', 'questionList', 'examList']
   }
 
   handleClick (type) {

@@ -16,7 +16,7 @@ class App extends Component {
     pages: [
       'views/positionCfg',
       'views/questionList',
-      'views/exam',
+      'views/examList',
       'views/examCfg',
       'views/result'
     ],
