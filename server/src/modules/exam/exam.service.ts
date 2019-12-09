@@ -15,14 +15,15 @@ export class ExamService {
   async findAll(): Promise<ExamEntity[]> {
     return await this.examEntity.find()
   }
+
   async add(exam: CreateExamDto): Promise<ExamEntity> {
     return await this.examEntity.save(exam)
   }
-  // 更新
-  // async update(survey: UpdateSurveyDto): Promise<Boolean> {
-  //   await this.examEntity.update(survey.surveyId, survey)
-  //   return true
-  // }
+
+  async update(exam: ExamEntity): Promise<Boolean> {
+    await this.examEntity.update(exam.examId, exam)
+    return true
+  }
   
   async findOne(examId: number): Promise<ExamEntity> {
     let res = await this.examEntity.findOne({
