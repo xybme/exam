@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { AtInput, AtButton, AtForm, AtTextarea } from 'taro-ui'
+import { AtInput, AtButton, AtForm } from 'taro-ui'
 import BaseMenu from '../components/BaseMent'
 import '../assets/exam_cfg.scss'
 
@@ -16,13 +16,21 @@ export default class Index extends Component {
     }
   }  
   savaExamCfg () {
+    Taro.fetch({
+     url: '/exam/add',
+     data: this.state.examFrom
+    }).then(res => {
+      Taro.showToast({ title: res.message || '新增事情成功', icon: 'success' })
+    })
   }
 
   componentDidMount () {
   }
   
-  handleChange (name) {
+  handleChange (name, value) {
     let { examFrom } = this.state
+    examFrom[name] = value
+    this.setState({ examFrom })
   }
 
   render () {
@@ -38,11 +46,12 @@ export default class Index extends Component {
             value={examFrom.examName}
             onChange={this.handleChange.bind(this, 'examName')}
           />
-          <AtTextarea
+          <AtInput
+            title='描述'
+            type='text'
+            placeholder='描述'
             value={examFrom.describe}
             onChange={this.handleChange.bind(this, 'describe')}
-            maxLength={100}
-            placeholder='描述内容...'
           />
 
           <AtButton type='primary' size='normal' onClick={this.savaExamCfg.bind(this)}>保存试卷配置</AtButton>

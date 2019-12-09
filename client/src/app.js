@@ -17,7 +17,7 @@ class App extends Component {
       'views/login',
       'views/positionCfg',
       'views/questionList',
-      'views/exam',
+      'views/examList',
       'views/examCfg',
       'views/result'
     ],
