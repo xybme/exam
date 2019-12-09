@@ -6,11 +6,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { DB_CONFIG } from '@/app.config'
 // 模块
-// import { UserModule } from './modules/user/user.module';
 import { ExamModule } from './modules/exam/exam.module';
 import { PositionModule } from './modules/position/postion.module'
 import { QuestionModule } from './modules/question/question.module';
 import { OptionModule } from './modules/option/option.module';
+import { ResultModule } from './modules/result/result.module';
 // import { AuthModule } from './modules/auth/auth.module';
 @Module({
   imports: [
@@ -20,11 +20,11 @@ import { OptionModule } from './modules/option/option.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-    // UserModule,
     ExamModule,
     PositionModule,
     QuestionModule,
     OptionModule,
+    ResultModule,
     // AuthModule
   ],
   controllers: [AppController],
