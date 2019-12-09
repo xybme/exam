@@ -16,6 +16,7 @@ export class QuestionService {
     const [rows, totalRecords] = await this.questionEntity.findAndCount({
       where,
       order: { 'createTime': 'DESC' },
+      relations: ['options'],
       skip: (pageParam.currentPage - 1) * pageParam.everyPage,
       take: pageParam.everyPage,
     })

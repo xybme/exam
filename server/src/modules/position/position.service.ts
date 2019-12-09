@@ -11,7 +11,7 @@ export class PositionService {
     @InjectRepository(PositionEntity)
     private readonly positionEntity: Repository<PositionEntity>
   ) { }
-  
+
   /**新增 */
   async add(position: PositionEntity) {
     return await this.positionEntity.save(position)
@@ -24,7 +24,7 @@ export class PositionService {
 
   /**更新 */
   async update(position: PositionEntity): Promise<Boolean> {
-    await this.positionEntity.update(position.id, position)
+    await this.positionEntity.update(position.positionId, position)
     return true
   }
 }
