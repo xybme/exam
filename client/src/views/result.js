@@ -13,6 +13,12 @@ export default class Index extends Component {
    }
 
   componentDidMount () {
+    Taro.fetch({
+      url: '/result/list',
+      method: 'GET'
+    }).then(res => {
+      console.log(res)
+    })
   }
 
   componentWillUnmount () { }

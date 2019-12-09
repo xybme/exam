@@ -17,6 +17,7 @@ class App extends Component {
       'views/positionCfg',
       'views/questionList',
       'views/exam',
+      'views/examCfg',
       'views/result'
     ],
     window: {

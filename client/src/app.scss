@@ -1,3 +1,14 @@
+@import "~taro-ui/dist/style/components/list.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+@import "~taro-ui/dist/style/components/input.scss";
+@import "~taro-ui/dist/style/components/button.scss";
+@import "~taro-ui/dist/style/components/loading.scss";
+@import "~taro-ui/dist/style/components/modal.scss";
+
 body {
   background: #fff;
+}
+
+.at-modal__container {
+  width: 80% !important;
 }
