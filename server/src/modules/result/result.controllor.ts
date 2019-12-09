@@ -1,4 +1,5 @@
-import { Controller, Post, Get, Query, Body } from "@nestjs/common";
+import { Controller, Post, Get, Query, UseGuards, Body } from "@nestjs/common";
+import { JwtAuthGuard } from '@/guards/auth.guard'
 import { filterPage } from '@/utils/filter.param'
 import { ResultService } from './result.service'
 import { CreateResultDto, UpdateResultDto } from './result.dto'
@@ -13,6 +14,7 @@ export class ResultControllor {
 
   /**查询列表 分页+条件查询 */
   @Get('list')
+  @UseGuards(JwtAuthGuard)
   async queryFileList(@Query() param: any) {
     const { applicant, examId } = param
     let where = {}

@@ -1,10 +1,12 @@
-import { Controller, Get, Query, Post, Body, HttpException } from "@nestjs/common";
+import { Controller, Get, Query, Post, Body, UseGuards, HttpException } from "@nestjs/common";
 import { filterPage } from '@/utils/filter.param'
+import { JwtAuthGuard } from '@/guards/auth.guard'
 import { QuestionService } from "./question.service";
 import { OptionService } from '../option/option.service'
 import { CreateQuestionDto } from './question.dto'
 
 @Controller('question')
+@UseGuards(JwtAuthGuard)
 export class QuestionControllor {
   constructor(
     private readonly questionService: QuestionService,

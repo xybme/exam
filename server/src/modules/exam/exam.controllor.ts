@@ -16,7 +16,8 @@ export class ExamControllor {
 
   @Get('list')
   @UseGuards(JwtAuthGuard)
-  async list(): Promise<ExamEntity[]> {
+  async list(@Req() req): Promise<ExamEntity[]> {
+    console.log(req.user)
     return await this.examService.findAll()
   }
 
@@ -29,11 +30,13 @@ export class ExamControllor {
   }
 
   @Post('add')
+  @UseGuards(JwtAuthGuard)
   async add(@Body() exam: CreateExamDto): Promise<ExamEntity> {
     return await this.examService.add(exam)
   }
 
   @Post('update')
+  @UseGuards(JwtAuthGuard)
   async update(@Body() exam: ExamEntity): Promise<Boolean> {
     if (!exam.examId) {
       throw new HttpException(`缺少examId`, 200);

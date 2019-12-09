@@ -38,7 +38,7 @@ export default class Login extends Component {
       if (newToken) {
         Taro.setStorageSync('token', newToken)
       }
-      Taro.redirectTo({url: '/views/exam'})
+      Taro.redirectTo({url: '/views/examList'})
     })
   }
   render() {
