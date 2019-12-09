@@ -1,7 +1,6 @@
-import { IsNumber, Length, IsMobilePhone, IsString, IsEmpty } from 'class-validator';
+import { IsNumber, Length, IsMobilePhone, IsString, IsEmpty, IsNotEmpty } from 'class-validator';
 
 export class CreateResultDto {
-
   @IsNumber()
   examId: number;
 
@@ -12,7 +11,13 @@ export class CreateResultDto {
   @IsMobilePhone('zh-CN')
   telephone: string;
 
-  @IsEmpty()
   resultJson: string
+}
 
+export class UpdateResultDto {
+  @IsNumber()
+  resultId: number;
+
+  @IsNotEmpty()
+  resultJson: string
 }

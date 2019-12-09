@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { entityDatePipe } from '@/utils/time.format'
 
 @Entity('exam_result')
@@ -22,9 +22,12 @@ export class ResultEntity {
   @Column({ comment: '期望薪资', nullable: true })
   salaryMax: number;
   
-  @Column({ type: 'varchar', comment: 'json保存答案 [{id:1,optionId:2},{id:1,text:这是输入的答案}]'})
+  @Column({ type: 'varchar', nullable: true, comment: 'json保存答案 [{id:1,optionId:2},{id:1,text:这是输入的答案}]'})
   resultJson: string;
 
-  @Column({ type: 'datetime', comment: '创建时间', default: () => 'CURRENT_TIMESTAMP', transformer: entityDatePipe })
-  createTime: Date;
+  @CreateDateColumn({ type: 'datetime', comment: '开始时间', transformer: entityDatePipe })
+  startTime: Date;
+
+  @UpdateDateColumn({ type: 'datetime', comment: '结束时间', transformer: entityDatePipe })
+  endTime: Date;
 }
