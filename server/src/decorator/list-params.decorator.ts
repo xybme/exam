@@ -2,7 +2,7 @@ import { createParamDecorator } from '@nestjs/common';
 import * as lodash from 'lodash';
 
 /**自定义查询的 where和order条件 */
-export interface ICustConfig {
+export interface IParamsConfig {
   whereOptions?: string[];
   orderOptions?: string[];
   defaultOrder?: {
@@ -25,7 +25,7 @@ export interface IParamsResult {
  * 分页列表参数解析装饰器 必须是 get请求
  * 前端传参示例{currentPage:2,everyPage:10,orderBy:'createTime',orderValue:'ASC',...其他where条件}
  */
-export const ListParams = createParamDecorator((customConfig: ICustConfig, req): IParamsResult => {
+export const ListParams = createParamDecorator((customConfig: IParamsConfig, req): IParamsResult => {
   const query = req.query
   const pageParams = {
     everyPage: Number(query.everyPage || 10),
