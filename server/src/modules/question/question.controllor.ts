@@ -1,5 +1,5 @@
 import { Controller, Get, Query, Post, Body, UseGuards, HttpException } from "@nestjs/common";
-import { filterPage } from '@/utils/filter.param'
+import { ListParams, IParamsResult } from '@/decorator/list-params.decorator'
 import { JwtAuthGuard } from '@/guards/auth.guard'
 import { QuestionService } from "./question.service";
 import { OptionService } from '../option/option.service'
@@ -12,7 +12,7 @@ export class QuestionControllor {
     private readonly questionService: QuestionService,
     private readonly optionService: OptionService,
   ) { }
-  
+
   /**新建问题，先存选项，再存问题 */
   @Post('add')
   async add(@Body() question: CreateQuestionDto) {
@@ -29,16 +29,17 @@ export class QuestionControllor {
     question.options = optionRes
     return await this.questionService.add(question)
   }
-  
+
   /**查询问题列表 分页+条件查询 */
   @Get('list')
-  async queryFileList(@Query() param: any) {
-    console.log(param)
-    const { positionId, questionType } = param
-    let where = {}
-    if (positionId) where['positionId'] = positionId
-    if (questionType) where['questionType'] = questionType
-    const pageParam = filterPage(param)
-    return await this.questionService.find({ pageParam, where })
+  async queryFileList(@ListParams({
+    // 条件查询字段
+    whereOptions: ['positionId', 'questionType'],
+    // 允许排序的字段
+    orderOptions: ['createTime'],
+    // 默认排序
+    defaultOrder: { 'createTime': 'DESC' }
+  }) { pageParams, where, order }: IParamsResult) {
+    return await this.questionService.find({ pageParams, where, order })
   }
 }
