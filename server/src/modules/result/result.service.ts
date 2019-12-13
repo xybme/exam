@@ -1,6 +1,7 @@
 import { Injectable, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { IParamsResult } from '@/decorator/list-params.decorator'
 import { ResultEntity } from './result.entity';
 import { CreateResultDto, UpdateResultDto } from './result.dto'
 /**
@@ -14,15 +15,15 @@ export class ResultService {
   ) { }
 
   /**查询列表 分页 */
-  async find({ pageParam, where }) {
+  async find({ pageParams, where, order }: IParamsResult) {
     const [rows, totalRecords] = await this.resultEntity.findAndCount({
       where,
-      order: { 'startTime': 'DESC' },
-      skip: (pageParam.currentPage - 1) * pageParam.everyPage,
-      take: pageParam.everyPage,
+      order,
+      skip: (pageParams.currentPage - 1) * pageParams.everyPage,
+      take: pageParams.everyPage,
     })
     return {
-      page: { totalRecords, ...pageParam },
+      page: { totalRecords, ...pageParams },
       rows
     }
   }

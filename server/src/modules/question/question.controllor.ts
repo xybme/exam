@@ -39,7 +39,7 @@ export class QuestionControllor {
     orderOptions: ['createTime'],
     // 默认排序
     defaultOrder: { 'createTime': 'DESC' }
-  }) { pageParams, where, order }: IParamsResult) {
-    return await this.questionService.find({ pageParams, where, order })
+  }) params: IParamsResult) {
+    return await this.questionService.find(params)
   }
 }

@@ -2,7 +2,6 @@ import { Injectable, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ExamEntity } from './exam.entity';
-import { filterParam } from '../../utils/filter.param'
 import { CreateExamDto } from './exam.dto'
 
 @Injectable()

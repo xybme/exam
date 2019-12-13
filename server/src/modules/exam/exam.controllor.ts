@@ -37,7 +37,7 @@ export class ExamControllor {
 
   @Post('update')
   @UseGuards(JwtAuthGuard)
-  async update(@Body() exam: ExamEntity): Promise<Boolean> {
+  async update(@Body() exam: ExamEntity): Promise<string> {
     if (!exam.examId) {
       throw new HttpException(`缺少examId`, 200);
     }
@@ -46,7 +46,7 @@ export class ExamControllor {
       throw new HttpException(`此试卷已存在答题记录，不可修改`, 200);
     }
     await this.examService.update(exam)
-    return true
+    return '修改成功'
   }
 }
 
