@@ -35,7 +35,7 @@ export class QuestionService {
   }
 
   /**新增 */
-  async add(question: CreateQuestionDto): Promise<QuestionEntity> {
+  async add(question: CreateQuestionDto) {
     return await this.questionEntity.save(question)
   }
 }

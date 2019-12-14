@@ -1,0 +1,23 @@
+{"path":"/exam/exam/findById?examId=","method":"GET","status":400,"message":"errorValidation failed (numeric string is expected)","time":"2019-12-14 15:04:39","ip":"::1","level":"error"}
+{"path":"/exam/exam/findById?examId=undefined","method":"GET","status":400,"message":"errorValidation failed (numeric string is expected)","time":"2019-12-14 15:04:44","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/exam/findById?examId=undefined","method":"GET","status":400,"message":"errorValidation failed (numeric string is expected)","time":"2019-12-14 15:05:15","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/exam/findById?examId=undefined","method":"GET","status":400,"message":"errorValidation failed (numeric string is expected)","time":"2019-12-14 15:05:31","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/result/list","method":"GET","status":401,"message":"errortoken过期","time":"2019-12-14 15:08:03","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/result/list","method":"GET","status":401,"message":"errortoken过期","time":"2019-12-14 15:18:40","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/exam/findById?examId=undefined","method":"GET","status":400,"message":"errorValidation failed (numeric string is expected)","time":"2019-12-14 15:18:47","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/exam/findById?examId=undefined","method":"GET","status":400,"message":"errorValidation failed (numeric string is expected)","time":"2019-12-14 15:18:55","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/exam/findById?examId=undefined","method":"GET","status":400,"message":"errorValidation failed (numeric string is expected)","time":"2019-12-14 15:19:12","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/exam/findById?examId=undefined","method":"GET","status":400,"message":"errorValidation failed (numeric string is expected)","time":"2019-12-14 15:20:25","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/exam/findById?examId=undefined","method":"GET","status":400,"message":"errorValidation failed (numeric string is expected)","time":"2019-12-14 15:22:46","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/exam/findById?examId=undefined","method":"GET","status":400,"message":"errorValidation failed (numeric string is expected)","time":"2019-12-14 15:22:49","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/exam/findById?examId=undefined","method":"GET","status":400,"message":"errorValidation failed (numeric string is expected)","time":"2019-12-14 15:22:58","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/result/add","method":"POST","status":200,"message":"errorexamId must be a number","time":"2019-12-14 15:26:14","ip":"::1","level":"error"}
+{"path":"/exam/result/add","method":"POST","status":200,"message":"errorexamId must be a number","params":"","time":"2019-12-14 15:28:15","ip":"::1","level":"error"}
+{"path":"/exam/result/add","method":"POST","status":200,"message":"errorexamId must be a number","params":"{\"applicant\":\"范文\",\"telephone\":\"18398101098\"}","time":"2019-12-14 15:29:56","ip":"::1","level":"error"}
+{"path":"/exam/result/add","method":"POST","status":200,"message":"errorexamId must be a number","params":"{\"applicant\":\"范文\",\"telephone\":\"18398101098\"}","time":"2019-12-14 15:39:09","ip":"::1","level":"error"}
+{"path":"/exam/exam/findById?examId=","method":"GET","status":400,"message":"errorValidation failed (numeric string is expected)","params":"","time":"2019-12-14 15:39:47","ip":"::1","level":"error"}
+{"path":"/exam/result/list","method":"GET","status":401,"message":"errortoken过期","params":"","time":"2019-12-14 15:40:14","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/exam/findById?examId=","method":"GET","status":400,"message":"errorValidation failed (numeric string is expected)","params":"","time":"2019-12-14 15:41:48","ip":"::1","level":"error"}
+{"path":"/exam/position/queryAll","method":"GET","status":401,"message":"error未通过token认证","params":"","time":"2019-12-14 15:42:50","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/result/list","method":"GET","status":401,"message":"errortoken过期","params":"","time":"2019-12-14 16:45:56","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/exam/result/list","method":"GET","status":401,"message":"errortoken过期","params":"","time":"2019-12-14 17:29:05","ip":"::ffff:192.168.70.180","level":"error"}

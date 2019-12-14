@@ -6,6 +6,16 @@
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Injectable, NestInterceptor, CallHandler, ExecutionContext } from '@nestjs/common';
+const winston = require('winston');
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'log/error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'log/info.log' })
+  ]
+});
 const isDevMode = true
 
 @Injectable()
@@ -16,13 +26,13 @@ export class LoggingInterceptor implements NestInterceptor {
       return call$;
     }
     const request = context.switchToHttp().getRequest();
-    const content = request.method + ' -> ' + request.url + JSON.stringify(request.body);
-    console.log('-----收到请求：', content);
+    const content = request.method + ' -> ' + request.url;
     const now = Date.now();
     return call$.pipe(
       // 通过rxjs 管道进入下一个拦截器
-      tap()
-      // tap(() => console.log('--- 响应请求：', content, `${Date.now() - now}ms`)),
+      tap(() => {
+        logger.log('info', { path: content, time: now })
+      }),
     );
   }
 }

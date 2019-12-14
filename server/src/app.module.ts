@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { utilities as nestWinstonModuleUtilities, WinstonModule } from 'nest-winston';
+import * as winston from 'winston';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 // 数据库
@@ -19,6 +21,18 @@ import { AuthModule } from './modules/auth/auth.module';
       ...DB_CONFIG,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
+    }),
+    WinstonModule.forRoot({
+      transports: [
+        new winston.transports.Console({
+          format: winston.format.combine(
+            winston.format.timestamp(),
+            nestWinstonModuleUtilities.format.nestLike(),
+          ),
+        }),
+        // other transports...
+      ],
+      // other options
     }),
     ExamModule,
     PositionModule,

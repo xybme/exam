@@ -17,7 +17,7 @@ export class ExamControllor {
   @Get('list')
   @UseGuards(JwtAuthGuard)
   async list(@Req() req): Promise<ExamEntity[]> {
-    console.log(req.user)
+    // console.log(req.user)
     return await this.examService.findAll()
   }
 
