@@ -1,5 +1,6 @@
-import { Controller, Post, Get, Query, Body } from "@nestjs/common";
-import { filterPage } from '@/utils/filter.param'
+import { Controller, Post, Get, Query, ParseIntPipe, UseGuards, Body } from "@nestjs/common";
+import { JwtAuthGuard } from '@/guards/auth.guard'
+import { ListParams, IParamsResult } from '@/decorator/list-params.decorator'
 import { ResultService } from './result.service'
 import { CreateResultDto, UpdateResultDto } from './result.dto'
 /**
@@ -13,13 +14,18 @@ export class ResultControllor {
 
   /**查询列表 分页+条件查询 */
   @Get('list')
-  async queryFileList(@Query() param: any) {
-    const { applicant, examId } = param
-    let where = {}
-    if (applicant) where['applicant'] = applicant
-    if (examId) where['examId'] = examId
-    const pageParam = filterPage(param)
-    return await this.resultService.find({ pageParam, where })
+  @UseGuards(JwtAuthGuard)
+  async queryFileList(@ListParams({
+    whereOptions: ['applicant', 'telephone'],
+    defaultOrder: { 'startTime': 'DESC' }
+  }) params: IParamsResult) {
+    return await this.resultService.find(params)
+  }
+
+  /**查询指定Id */
+  @Get('findById')
+  async findById(@Query('resultId', new ParseIntPipe()) resultId: number) {
+    return await this.resultService.findOne(resultId)
   }
 
   /**新增 开始答卷 插入应聘者信息 */

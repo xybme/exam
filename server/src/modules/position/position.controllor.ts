@@ -1,10 +1,12 @@
-import { Controller, Post, HttpException, Body, Get } from "@nestjs/common";
+import { Controller, Post, HttpException, Body, Get, UseGuards } from "@nestjs/common";
+import { JwtAuthGuard } from '@/guards/auth.guard'
 import { PositionEntity } from './position.entity';
 import { PositionService } from './position.service';
 /**
  * postion 控制器
  */
 @Controller('position')
+@UseGuards(JwtAuthGuard)
 export class PositonControllor {
   constructor(
     private readonly positionService: PositionService

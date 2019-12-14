@@ -1,10 +1,12 @@
-import { Controller, Post, HttpException, Body } from "@nestjs/common";
+import { Controller, Post, UseGuards, Body } from "@nestjs/common";
+import { JwtAuthGuard } from '@/guards/auth.guard'
 import { OptionService } from './option.service';
 import { OptionEntity } from './option.entity';
 /**
  * option 控制器
  */
 @Controller('option')
+@UseGuards(JwtAuthGuard)
 export class OptionControllor {
   constructor(
     private readonly optionService: OptionService

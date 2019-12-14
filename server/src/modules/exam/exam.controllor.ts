@@ -16,7 +16,8 @@ export class ExamControllor {
 
   @Get('list')
   @UseGuards(JwtAuthGuard)
-  async list(): Promise<ExamEntity[]> {
+  async list(@Req() req): Promise<ExamEntity[]> {
+    console.log(req.user)
     return await this.examService.findAll()
   }
 
@@ -29,12 +30,14 @@ export class ExamControllor {
   }
 
   @Post('add')
+  @UseGuards(JwtAuthGuard)
   async add(@Body() exam: CreateExamDto): Promise<ExamEntity> {
     return await this.examService.add(exam)
   }
 
   @Post('update')
-  async update(@Body() exam: ExamEntity): Promise<Boolean> {
+  @UseGuards(JwtAuthGuard)
+  async update(@Body() exam: ExamEntity): Promise<string> {
     if (!exam.examId) {
       throw new HttpException(`缺少examId`, 200);
     }
@@ -43,7 +46,7 @@ export class ExamControllor {
       throw new HttpException(`此试卷已存在答题记录，不可修改`, 200);
     }
     await this.examService.update(exam)
-    return true
+    return '修改成功'
   }
 }
 
