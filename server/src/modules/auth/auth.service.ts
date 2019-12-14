@@ -10,7 +10,7 @@ export class AuthService {
     const user: JwtPayload = { telephone, name: '范文' };
     const accessToken = this.jwtService.sign(user);
     return {
-      expiresIn: 60 * 30, // 单位是秒
+      expiresIn: 60 * 300, // 单位是秒
       accessToken,
     };
   }

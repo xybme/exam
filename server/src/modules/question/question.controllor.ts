@@ -35,8 +35,6 @@ export class QuestionControllor {
   async queryFileList(@ListParams({
     // 条件查询字段
     whereOptions: ['positionId', 'questionType'],
-    // 允许排序的字段
-    orderOptions: ['createTime'],
     // 默认排序
     defaultOrder: { 'createTime': 'DESC' }
   }) params: IParamsResult) {

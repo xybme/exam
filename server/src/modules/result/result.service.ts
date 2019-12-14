@@ -27,7 +27,11 @@ export class ResultService {
       rows
     }
   }
-
+  async findOne(resultId: number): Promise<ResultEntity> {
+    return await this.resultEntity.findOne({
+      where: { resultId }
+    });
+  }
   /**新增 开始答卷 */
   async add(result: CreateResultDto) {
     return await this.resultEntity.save(result)

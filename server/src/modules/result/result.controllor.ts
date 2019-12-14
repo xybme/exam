@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Query, UseGuards, Body } from "@nestjs/common";
+import { Controller, Post, Get, Query, ParseIntPipe, UseGuards, Body } from "@nestjs/common";
 import { JwtAuthGuard } from '@/guards/auth.guard'
 import { ListParams, IParamsResult } from '@/decorator/list-params.decorator'
 import { ResultService } from './result.service'
@@ -17,10 +17,15 @@ export class ResultControllor {
   @UseGuards(JwtAuthGuard)
   async queryFileList(@ListParams({
     whereOptions: ['applicant', 'telephone'],
-    orderOptions: ['startTime'],
     defaultOrder: { 'startTime': 'DESC' }
   }) params: IParamsResult) {
     return await this.resultService.find(params)
+  }
+
+  /**查询指定Id */
+  @Get('findById')
+  async findById(@Query('resultId', new ParseIntPipe()) resultId: number) {
+    return await this.resultService.findOne(resultId)
   }
 
   /**新增 开始答卷 插入应聘者信息 */

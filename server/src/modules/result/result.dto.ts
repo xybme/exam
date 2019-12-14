@@ -18,6 +18,6 @@ export class UpdateResultDto {
   @IsNumber()
   resultId: number;
 
-  @IsNotEmpty()
+  @IsString({message: 'resultJson字段先JSON.stringify再提交'})
   resultJson: string
 }

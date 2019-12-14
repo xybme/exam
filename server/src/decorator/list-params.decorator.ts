@@ -4,7 +4,6 @@ import * as lodash from 'lodash';
 /**自定义查询的 where和order条件 */
 export interface IParamsConfig {
   whereOptions?: string[];
-  orderOptions?: string[];
   defaultOrder?: {
     [key: string]: 'DESC' | 'ASC'
   }
@@ -48,10 +47,9 @@ export const ListParams = createParamDecorator((customConfig: IParamsConfig, req
       order = customConfig.defaultOrder
     }
     // 处理前端传来的order条件
-    if (lodash.isArray(customConfig.orderOptions)) {
-      const verifyOrderBy = customConfig.orderOptions.includes(query.orderBy)
+    if (lodash.isString(query.orderBy)) {
       const verifyOrderValue = ['DESC', 'ASC'].includes(query.orderValue)
-      if (verifyOrderBy && verifyOrderValue) {
+      if (verifyOrderValue) {
         order = { [query.orderBy]: query.orderValue }
       }
     }
