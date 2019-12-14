@@ -1,14 +1,14 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtNavBar, AtDrawer } from 'taro-ui'
-import '../assets/base_ments.scss'
+import '../assets/base_ment.scss'
 
 export default class Index extends Component {
 
   state = {
     show: false,
-    menus: ['职位配置', '题目配置', '试卷'],
-    urlArr: ['positionCfg', 'questionList', 'examList']
+    menus: ['职位配置', '题目配置', '试卷', '答题记录'],
+    urlArr: ['positionCfg', 'questionList', 'examList', 'result']
   }
 
   handleClick (type) {
@@ -29,25 +29,27 @@ export default class Index extends Component {
 
   render () {
     return (
-      <View className='index'>
-        <AtNavBar
-          onClickRgIconSt={this.handleClick.bind(this, 'right')}
-          onClickLeftIcon={this.handleClick.bind(this, 'left')}
-          color='#000'
-          title={this.props.title || 'title'}
-          leftText='返回'
-          leftIconType='chevron-left'
-          rightFirstIconType='bullet-list'
-        />
+      <View className='base-menu-height'>
+        <View className='base-menu'>
+          <AtNavBar
+            onClickRgIconSt={this.handleClick.bind(this, 'right')}
+            onClickLeftIcon={this.handleClick.bind(this, 'left')}
+            color='#000'
+            title={this.props.title || 'title'}
+            leftText='返回'
+            leftIconType='chevron-left'
+            rightFirstIconType='bullet-list'
+          />
 
-        <AtDrawer 
-          show={this.state.show} 
-          left 
-          mask 
-          items={this.state.menus}
-          onItemClick={this.onItemClick.bind(this)}
-        ></AtDrawer>
+          <AtDrawer 
+            show={this.state.show} 
+            left 
+            mask 
+            items={this.state.menus}
+            onItemClick={this.onItemClick.bind(this)}
+          ></AtDrawer>
 
+        </View>
       </View>
     )
   }

@@ -1,0 +1,16 @@
+@import "~taro-ui/dist/style/components/nav-bar.scss";
+@import "~taro-ui/dist/style/components/drawer.scss";
+
+
+.base-menu-height {
+  height: 100px;
+}
+
+.base-menu {
+  background: #ccc;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}

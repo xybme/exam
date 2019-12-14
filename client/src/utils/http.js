@@ -8,7 +8,7 @@ export default function fetch(options) {
   const header = {}
   token && (header['token'] = token)
   if (method === 'POST') {
-    header['content-type'] = 'application/x-www-form-urlencoded'
+    header['content-type'] = 'application/json'
   }
   if (showLoading) {
     if (typeof showLoading == 'object') {

@@ -2,7 +2,8 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtList, AtListItem, AtButton } from "taro-ui"
 import BaseMenu from '../components/BaseMent'
-import '../assets/exam.scss'
+import { serializeObj } from '../utils/tools'
+import '../assets/exam_list.scss'
 
 export default class Index extends Component {
   config = {
@@ -13,25 +14,22 @@ export default class Index extends Component {
   }
   componentDidMount () {
     this.queryExamList()
-    // Taro.fetch({
-    //   url: '/exam/findById?examId=1',
-    //   method: 'GET'
-    // }).then(res => {
-    //   console.log(res)
-    // })
   }
   addExam () {
     Taro.navigateTo({ url: '/views/examCfg' })
   }
 
-  componentWillUnmount () { }
+  showQrCode (examId) {
+    let url = `/views/register?examId=${examId}`
+    Taro.navigateTo({ url })
+    console.log(url);
+  }
 
-  componentDidShow () { }
-
-  componentDidHide () { }
-
-  showQrCode () {
-    
+  updataExam (item, e) {
+    e.stopPropagation()
+    const { describe, examId, examName, questionIds } = item
+    const queryParams = serializeObj({ describe, examId, examName, questionIds } )
+    Taro.navigateTo({ url: `/views/examCfg?${queryParams}`})
   }
 
   queryExamList () {
@@ -46,20 +44,28 @@ export default class Index extends Component {
   render () {
     const { examList } = this.state
     return (
-      <View className='question-list'>
-        <BaseMenu title='试卷' />
-        <AtButton onClick={this.addExam.bind(this)}>新增试卷</AtButton>
+      <View className='exam-list'>
+        <BaseMenu title='试卷列表' />
         <AtList>
           { examList.map((item, index) => (
-            <AtListItem 
-              onClick={this.showQrCode.bind(this)}
-              key={index}
-              title={item.examName} 
-              note={item.createTime}
-              extraText={item.describe}
-            />
+            <View className='item-wrap' onClick={this.showQrCode.bind(this, item.examId)} key={index}>
+              <AtListItem 
+                title={item.examName}
+                note={item.describe}
+                // extraText={item.questionIds}
+              />
+              <View 
+                onClick={this.updataExam.bind(this, item)} 
+                className='update-btn'
+              >
+                修改
+              </View>
+            </View>
           ))}
         </AtList>
+        <View className='bottom-btn-wrap'>
+          <AtButton className='bottom-btn' type='primary' onClick={this.addExam.bind(this)}>新增试卷</AtButton>
+        </View>
       </View>
     )
   }
