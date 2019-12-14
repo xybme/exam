@@ -1,0 +1,29 @@
+@import "~taro-ui/dist/style/components/swipe-action.scss";
+.add-question {
+  .text-row {
+    font-size: 32px;
+    margin: 20px 30px;
+  }
+  .answer-wrap {
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    box-sizing: border-box;
+    .input {
+      width: 90%;
+    }
+    .isright-btn {
+      background:#F56C6C;
+      border-radius: 0;
+      color: #fff;
+      border: 0;
+      height: 90px;
+    }
+    .isright-btn-true {
+      background: #67c23a;
+    }
+  } 
+  .at-swipe-action__option {
+    height: 90px;
+  }
+}

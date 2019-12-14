@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtList, AtListItem, AtButton } from "taro-ui"
 import BaseMenu from '../components/BaseMent'
-import '../assets/exam.scss'
+import { serializeObj } from '../utils/tools'
 
 export default class Index extends Component {
   config = {
@@ -13,12 +13,6 @@ export default class Index extends Component {
   }
   componentDidMount () {
     this.queryExamList()
-    // Taro.fetch({
-    //   url: '/exam/findById?examId=1',
-    //   method: 'GET'
-    // }).then(res => {
-    //   console.log(res)
-    // })
   }
   addExam () {
     Taro.navigateTo({ url: '/views/examCfg' })
@@ -30,8 +24,10 @@ export default class Index extends Component {
 
   componentDidHide () { }
 
-  showQrCode () {
-    
+  updataExam (item) {
+    const { describe, examId, examName, questionIds } = item
+    const queryParams = serializeObj({ describe, examId, examName, questionIds } )
+    Taro.navigateTo({ url: `/views/examCfg?${queryParams}`})
   }
 
   queryExamList () {
@@ -48,18 +44,18 @@ export default class Index extends Component {
     return (
       <View className='question-list'>
         <BaseMenu title='试卷' />
-        <AtButton onClick={this.addExam.bind(this)}>新增试卷</AtButton>
         <AtList>
           { examList.map((item, index) => (
             <AtListItem 
-              onClick={this.showQrCode.bind(this)}
+              onClick={this.updataExam.bind(this, item)}
               key={index}
               title={item.examName} 
-              note={item.createTime}
-              extraText={item.describe}
+              note={item.describe}
+              extraText={item.questionIds}
             />
           ))}
         </AtList>
+        <AtButton className='bottom-btn' type='primary' onClick={this.addExam.bind(this)}>新增试卷</AtButton>
       </View>
     )
   }

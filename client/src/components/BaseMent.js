@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtNavBar, AtDrawer } from 'taro-ui'
-import '../assets/base_ments.scss'
+import '../assets/base_ment.scss'
 
 export default class Index extends Component {
 
@@ -29,7 +29,7 @@ export default class Index extends Component {
 
   render () {
     return (
-      <View className='index'>
+      <View className='base-menu'>
         <AtNavBar
           onClickRgIconSt={this.handleClick.bind(this, 'right')}
           onClickLeftIcon={this.handleClick.bind(this, 'left')}

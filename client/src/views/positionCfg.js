@@ -77,10 +77,14 @@ export default class Index extends Component {
     return (
       <View className='index'>
         <BaseMenu title='职位配置' />
-        <AtButton onClick={this.showModalHandle.bind(this, 'open')}>新增职位</AtButton>
         <AtList>
           {positionArr.map((item, index) => (
-            <AtListItem key={index} title={item.positionName} onClick={this.changePositionName.bind(this, item)}  />
+            <AtListItem 
+              key={index} 
+              extraText={`id: ${item.positionId}`}
+              title={item.positionName} 
+              onClick={this.changePositionName.bind(this, item)} 
+            />
           ))}
         </AtList>
         {
@@ -102,7 +106,7 @@ export default class Index extends Component {
             </AtModalAction>
           </AtModal>
         }
-      
+        <AtButton className='bottom-btn' type='primary' onClick={this.showModalHandle.bind(this, 'open')}>新增职位</AtButton>
       </View>
     )
   }

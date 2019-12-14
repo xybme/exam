@@ -17,9 +17,12 @@ class App extends Component {
       'views/login',
       'views/positionCfg',
       'views/questionList',
+      'views/addQuestion',
+      'views/exam',
       'views/examList',
       'views/examCfg',
-      'views/result'
+      'views/result',
+      'views/register',
     ],
     window: {
       backgroundTextStyle: 'light',

@@ -1,0 +1,16 @@
+@import "~taro-ui/dist/style/components/checkbox.scss";
+@import "~taro-ui/dist/style/components/card.scss";
+@import "~taro-ui/dist/style/components/checkbox.scss";
+
+.exam-page {
+  .options {
+    position: relative;
+    .check {
+      color: green;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
