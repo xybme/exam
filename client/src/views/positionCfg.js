@@ -106,7 +106,9 @@ export default class Index extends Component {
             </AtModalAction>
           </AtModal>
         }
-        <AtButton className='bottom-btn' type='primary' onClick={this.showModalHandle.bind(this, 'open')}>新增职位</AtButton>
+        <View className='bottom-btn-wrap'>
+          <AtButton className='bottom-btn' type='primary' onClick={this.showModalHandle.bind(this, 'open')}>新增职位</AtButton>
+        </View>
       </View>
     )
   }

@@ -45,7 +45,7 @@ export default class Index extends Component {
     Taro.fetch({
       url: '/question/list',
       method: 'GET',
-      data: { currentPage, everyPage: 5, ...searchForm }
+      data: { currentPage, ...searchForm }
     }).then(res => {
       this.setState({ 
         questionArr: res.rows,

@@ -29,25 +29,27 @@ export default class Index extends Component {
 
   render () {
     return (
-      <View className='base-menu'>
-        <AtNavBar
-          onClickRgIconSt={this.handleClick.bind(this, 'right')}
-          onClickLeftIcon={this.handleClick.bind(this, 'left')}
-          color='#000'
-          title={this.props.title || 'title'}
-          leftText='返回'
-          leftIconType='chevron-left'
-          rightFirstIconType='bullet-list'
-        />
+      <View className='base-menu-height'>
+        <View className='base-menu'>
+          <AtNavBar
+            onClickRgIconSt={this.handleClick.bind(this, 'right')}
+            onClickLeftIcon={this.handleClick.bind(this, 'left')}
+            color='#000'
+            title={this.props.title || 'title'}
+            leftText='返回'
+            leftIconType='chevron-left'
+            rightFirstIconType='bullet-list'
+          />
 
-        <AtDrawer 
-          show={this.state.show} 
-          left 
-          mask 
-          items={this.state.menus}
-          onItemClick={this.onItemClick.bind(this)}
-        ></AtDrawer>
+          <AtDrawer 
+            show={this.state.show} 
+            left 
+            mask 
+            items={this.state.menus}
+            onItemClick={this.onItemClick.bind(this)}
+          ></AtDrawer>
 
+        </View>
       </View>
     )
   }

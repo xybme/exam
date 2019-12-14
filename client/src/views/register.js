@@ -1,6 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, AtListItem } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { AtForm, AtInput, AtButton, AtRange } from 'taro-ui'
+import '../assets/register.scss'
 
 export default class Index extends Component {
   config = {
@@ -55,32 +56,34 @@ export default class Index extends Component {
     const { form } = this.state
     return (
       <View className='register-page'>
-      <AtForm>
-        <AtInput
-          title='你的姓名'
-          type='text'
-          placeholder='输入姓名'
-          value={form.applicant}
-          onChange={this.handleChange.bind(this, 'applicant')}
-        />
-        <AtInput
-          title='你的手机号'
-          type='text'
-          placeholder='输入你的手机号'
-          value={form.telephone}
-          onChange={this.handleChange.bind(this, 'telephone')}
-        />
-        <View>期望薪资: {form.salaryMin || 0} ~ {form.salaryMax || 0}</View>
-        <AtRange
-          sliderStyle='background: #6290E9'
-          value={[0, 0]}
-          min={1000}
-          max={30000}
-          onChange={this.handleChange.bind(this, 'range')}
-        />
-  
-        <AtButton type='primary' onClick={this.submitForm.bind(this)}>开始答题</AtButton>
-      </AtForm>
+        <View className='title'>填写资料</View>
+        <AtForm>
+          <AtInput
+            title='你的姓名'
+            type='text'
+            placeholder='输入姓名'
+            value={form.applicant}
+            onChange={this.handleChange.bind(this, 'applicant')}
+          />
+          <AtInput
+            title='你的手机号'
+            type='text'
+            placeholder='输入你的手机号'
+            value={form.telephone}
+            onChange={this.handleChange.bind(this, 'telephone')}
+          />
+          <View className='range-wrap'>
+            <View className='text'>期望薪资: {form.salaryMin || 0} ~ {form.salaryMax || 0}</View>
+            <AtRange
+              sliderStyle='background: #6290E9'
+              value={[0, 0]}
+              min={1000}
+              max={30000}
+              onChange={this.handleChange.bind(this, 'range')}
+            />
+          </View>
+          <AtButton type='primary' className='center-btn' onClick={this.submitForm.bind(this)}>开始答题</AtButton>
+        </AtForm>
       </View>
     )
   }

@@ -1,7 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import { AtCard, AtButton, AtListItem, AtTextarea } from "taro-ui"
 
+import CHECK_ICON from '../assets/img/check_icon.png'
 import '../assets/exam.scss'
 
 export default class Index extends Component {
@@ -10,7 +11,9 @@ export default class Index extends Component {
   }
   state = {
     questionTypeArr: ['', '单选', '多选', '问答'],
+    answerLabel: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
     examList: [],
+    examInfo: {},
     resultJson: []
   }
   componentDidMount () {
@@ -68,7 +71,10 @@ export default class Index extends Component {
       method: 'GET',
       data: { examId }
     }).then(res => {
-      this.setState({ examList: res.rows })
+      this.setState({ 
+        examInfo: res.attr,
+        examList: res.rows
+      })
     })
   }
 
@@ -84,46 +90,53 @@ export default class Index extends Component {
   }
 
   render () {
-    const { examList, questionTypeArr } = this.state
+    const { examList, questionTypeArr, examInfo, answerLabel } = this.state
     return (
       <View className='exam-page'>
-          <View>
-            { examList.map((item, index) => (
-              <View key={index}>
-                {/* <Text>{index+1}</Text> */}
-                <AtCard 
-                  isFull 
-                  title={item.questionName}
-                  extra={questionTypeArr[item.questionType]}
-                >
-                  {item.questionType !== 3 && item.options.map((answer, subI) => (
-                    <View className='options' key={subI}>
-                      <AtListItem 
-                        onClick={this.chooseAnswer.bind(this, index, subI, item.questionType)} 
-                        title={answer.optionName} 
-                      />
-                      { answer.isCheck &&  <View className='check'>选择了</View>}
-                    </View>
-                  ))}
-                  { item.questionType == 3 && 
-                    <AtTextarea
-                      value={item.text}
-                      onChange={this.changeTextArea.bind(this, index)}
-                      maxLength={999}
-                      placeholder='你的回答是...'
-                    />
-                   }
-                </AtCard>
-              </View>
+        <View className='exam-title'>{examInfo.examName}</View>
+        <View>
+          { examList.map((item, index) => (
+            <View className='question-item' key={index}>
+              <AtCard 
+                isFull 
+                title={`${index+1}、${item.questionName}`}
+                extra={questionTypeArr[item.questionType]}
+              >
+                {item.questionType !== 3 && item.options.map((answer, subI) => (
+                  <View 
+                    className={answer.isCheck ? 'options checkedbg' : 'options'}
+                    key={subI}
+                    onClick={this.chooseAnswer.bind(this, index, subI, item.questionType)}
+                  >
+                    <View className='index'>{answerLabel[subI]}.</View>
+                    <AtListItem className={answer.isCheck && 'checked'} title={answer.optionName} />
+                    { answer.isCheck &&  <Image src={CHECK_ICON} className='check'>选择了</Image>}
+                  </View>
+                ))}
+                { item.questionType == 3 && 
+                  <AtTextarea
+                    value={item.text}
+                    onChange={this.changeTextArea.bind(this, index)}
+                    maxLength={999}
+                    placeholder='你的回答是...'
+                  />
+                  }
+              </AtCard>
+            </View>
           ))}
-          </View>
-          <AtButton
-            className='center-btn' 
-            type='primary'
-            onClick={this.submitExam.bind(this)}
-          >
-            提交
+        </View>
+        <AtButton
+          className='center-btn' 
+          type='primary'
+          onClick={this.submitExam.bind(this)}
+        >
+          提交
         </AtButton>
+        {/* <View className='submit-success'>
+          <View className='tips'>
+            <View>答题完成</View>
+          </View>
+        </View> */}
       </View>
     )
   }

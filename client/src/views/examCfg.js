@@ -14,7 +14,7 @@ export default class Index extends Component {
     checkItemArr: [], // 已选中的问题
     currentPage: 1,
     totalRecords: 0,
-    everyPage: 8,
+    everyPage: 10,
     examForm: {
       examName: '', 
       describe: '',
@@ -144,14 +144,16 @@ export default class Index extends Component {
               onPageChange={this.changePage.bind(this)}
               current={currentPage}
             />
-          <AtButton 
-            type='primary' 
-            className='bottom-btn' 
-            size='normal' 
-            onClick={this.savaExamCfg.bind(this)}
-          >
-            { examForm.examId ? '修改' : '新增'}试卷
-          </AtButton>
+          <View className='bottom-btn-wrap'>   
+            <AtButton 
+              type='primary' 
+              className='bottom-btn' 
+              size='normal' 
+              onClick={this.savaExamCfg.bind(this)}
+            >
+              { examForm.examId ? '修改' : '新增'}试卷
+            </AtButton>
+          </View>  
         </AtForm>
       </View>
     )
