@@ -1,26 +1,5 @@
 import Taro from '@tarojs/taro'
 
-// 确认框
-export function confirm(options) {
-  const showCancel = options.showCancel === undefined ? true : options.showCancel
-  return Taro.showModal({
-    title: options.title || '提示',
-    content: options.content,
-    showCancel,
-    cancelText: options.cancelText || '取消',
-    cancelColor: '#333',
-    confirmText: options.confirmText || '确认',
-    confirmColor: '#fe2121'
-  })
-}
-// toast
-export function toast(msg) {
-  return Taro.showToast({
-    title: msg,
-    icon: 'none',
-    duration: 2000
-  })
-}
 // 对象序列化
 export function serializeObj(obj) {
   if (!obj) return ''
@@ -37,6 +16,11 @@ export function serializeObj(obj) {
   }
   return pairs.join('&')
 }
+
+export function isPhoneNum(str) {
+  return /^1((3[\d])|(4[5,6,7,9])|(5[0-3,5-9])|(6[5-7])|(7[0-8])|(8[\d])|(9[1,8,9]))\d{8}$/.test(str)
+}
+
 // 复制
 export function copy(copyText) {
   if (process.env.TARO_ENV === 'h5') {

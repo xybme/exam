@@ -10,6 +10,7 @@ export default class Index extends Component {
     navigationBarTitleText: '试卷'
   }
   state = {
+    isEnd: false,
     questionTypeArr: ['', '单选', '多选', '问答'],
     answerLabel: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
     examList: [],
@@ -65,32 +66,39 @@ export default class Index extends Component {
   }
 
   queryExam () {
-    const { examId = 2 } = this.$router.params
-    Taro.fetch({
-      url: '/exam/findById',
-      method: 'GET',
-      data: { examId }
-    }).then(res => {
-      this.setState({ 
-        examInfo: res.attr,
-        examList: res.rows
+    let hasIsEnd = window.localStorage.getItem('isEnd')
+    if (hasIsEnd) {
+      this.setState({ isEnd: true })
+    } else {
+      const { examId } = this.$router.params
+      Taro.fetch({
+        url: '/exam/findById',
+        method: 'GET',
+        data: { examId }
+      }).then(res => {
+        this.setState({ 
+          examInfo: res.attr,
+          examList: res.rows
+        })
       })
-    })
+    }
   }
 
   submitExam () {
-    const { resultId = 1 } = this.$router.params
+    const { resultId } = this.$router.params
     let { resultJson } = this.state
     console.log(resultJson);
     Taro.fetch({
       url: '/result/update',
-      data: { resultId, resultJson }
+      data: { resultId: Number(resultId), resultJson }
     }).then(() => {
+      this.setState({ isEnd: true })
+      window.localStorage.setItem('isEnd', this.state.isEnd)
     })
   }
 
   render () {
-    const { examList, questionTypeArr, examInfo, answerLabel } = this.state
+    const { examList, questionTypeArr, examInfo, answerLabel, isEnd } = this.state
     return (
       <View className='exam-page'>
         <View className='exam-title'>{examInfo.examName}</View>
@@ -125,18 +133,23 @@ export default class Index extends Component {
             </View>
           ))}
         </View>
-        <AtButton
-          className='center-btn' 
-          type='primary'
-          onClick={this.submitExam.bind(this)}
-        >
-          提交
-        </AtButton>
-        {/* <View className='submit-success'>
-          <View className='tips'>
-            <View>答题完成</View>
+        { examList.length && 
+          <AtButton
+            className='center-btn' 
+            type='primary'
+            onClick={this.submitExam.bind(this)}
+          >
+            提交
+          </AtButton>
+        }
+        {
+          isEnd && 
+          <View className='submit-success'>
+            <View className='tips'>
+              <View>您已答题完成, 请关闭本页面</View>
+            </View>
           </View>
-        </View> */}
+        }
       </View>
     )
   }
