@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View} from '@tarojs/components'
 import { AtCard } from "taro-ui"
-
+import { serializeObj } from '../utils/tools'
 import BaseMenu from '../components/BaseMent'
 
 export default class Index extends Component {
@@ -11,12 +11,11 @@ export default class Index extends Component {
   state = {
     resultList: []
   }
-  
-  componentWillMount () {
-   }
 
   toExamPage (item) {
-    console.log(item);
+    // console.log(item)
+    let params = serializeObj(item)
+    Taro.navigateTo({ url: `/views/showExamResult?${params}` })
   }
 
   componentDidMount () {
@@ -42,11 +41,13 @@ export default class Index extends Component {
             <AtCard
               key={index}
               title={item.applicant}
-              note={`开始时间: ${item.startTime}`}
+              note={`examId: ${item.examId}`}
               extra={item.telephone}
               onClick={this.toExamPage.bind(this, item)}
             >
               <View>期望薪资: {item.salaryMin || '未填写'} ~ {item.salaryMax}</View>
+              <View>开始时间: {item.startTime}</View>
+              <View>结束时间: {item.endTime}</View>
             </AtCard>
           ))
         }

@@ -61,7 +61,7 @@ export default class Login extends Component {
           value={this.state.password}
           onChange={this.handleChange.bind(this)}
         />
-        <AtButton type='primary' onClick={this.submit.bind(this)}>登录</AtButton>
+        <AtButton className='center-btn' type='primary' onClick={this.submit.bind(this)}>登录</AtButton>
       </View>
     )
   }

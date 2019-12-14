@@ -45,12 +45,12 @@ export default class Index extends Component {
     const { examList } = this.state
     return (
       <View className='exam-list'>
-        <BaseMenu title='试卷' />
+        <BaseMenu title='试卷列表' />
         <AtList>
           { examList.map((item, index) => (
             <View className='item-wrap' onClick={this.showQrCode.bind(this, item.examId)} key={index}>
               <AtListItem 
-                title={item.examName} 
+                title={item.examName}
                 note={item.describe}
                 // extraText={item.questionIds}
               />

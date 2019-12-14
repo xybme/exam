@@ -23,6 +23,7 @@ class App extends Component {
       'views/examCfg',
       'views/result',
       'views/register',
+      'views/showExamResult'
     ],
     window: {
       backgroundTextStyle: 'light',
