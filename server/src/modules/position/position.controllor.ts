@@ -1,5 +1,5 @@
 import { Controller, Post, HttpException, Body, Get, UseGuards } from "@nestjs/common";
-import { JwtAuthGuard } from '@/guards/auth.guard'
+import { JwtAuthGuard } from '@/common/guards/auth.guard'
 import { PositionEntity } from './position.entity';
 import { PositionService } from './position.service';
 /**

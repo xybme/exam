@@ -2,7 +2,7 @@ import { Controller, Get, UseGuards, Post, Res, HttpException, Body } from '@nes
 import { Response } from 'express'
 import { Length, IsString, IsMobilePhone } from 'class-validator';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard } from '../../guards/auth.guard'
+import { JwtAuthGuard } from '@/common/guards/auth.guard'
 
 class AccountDto {
   @IsMobilePhone('zh-CN')

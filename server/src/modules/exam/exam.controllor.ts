@@ -4,7 +4,7 @@ import { ExamEntity } from './exam.entity'
 import { CreateExamDto } from './exam.dto'
 import { QuestionService } from '../question/question.service'
 import { ResultService } from '../result/result.service'
-import { JwtAuthGuard } from '../../guards/auth.guard'
+import { JwtAuthGuard } from '@/common/guards/auth.guard'
 
 @Controller('exam')
 export class ExamControllor {

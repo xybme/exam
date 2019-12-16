@@ -1,9 +1,9 @@
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './filters/error.filter';
-import { TransformInterceptor } from './interceptors/transform.interceptor';
-import { LoggingInterceptor } from './interceptors/logging.interceptor'
-import { ValidationPipe } from './pipes/validation.pipe'
+import { HttpExceptionFilter } from './common/filters/error.filter';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor'
+import { ValidationPipe } from './common/pipes/validation.pipe'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

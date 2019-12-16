@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Query, ParseIntPipe, UseGuards, Body } from "@nestjs/common";
-import { JwtAuthGuard } from '@/guards/auth.guard'
-import { ListParams, IParamsResult } from '@/decorator/list-params.decorator'
+import { JwtAuthGuard } from '@/common/guards/auth.guard'
+import { ListParams, IParamsResult } from '@/common/decorator/list-params.decorator'
 import { ResultService } from './result.service'
 import { CreateResultDto, UpdateResultDto } from './result.dto'
 /**

@@ -1,5 +1,5 @@
 import { Controller, Post, UseGuards, Body } from "@nestjs/common";
-import { JwtAuthGuard } from '@/guards/auth.guard'
+import { JwtAuthGuard } from '@/common/guards/auth.guard'
 import { OptionService } from './option.service';
 import { OptionEntity } from './option.entity';
 /**

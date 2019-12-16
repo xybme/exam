@@ -1,6 +1,6 @@
 import { Controller, Get, Query, Post, Body, UseGuards, HttpException } from "@nestjs/common";
-import { ListParams, IParamsResult } from '@/decorator/list-params.decorator'
-import { JwtAuthGuard } from '@/guards/auth.guard'
+import { ListParams, IParamsResult } from '@/common/decorator/list-params.decorator'
+import { JwtAuthGuard } from '@/common/guards/auth.guard'
 import { QuestionService } from "./question.service";
 import { OptionService } from '../option/option.service'
 import { CreateQuestionDto } from './question.dto'

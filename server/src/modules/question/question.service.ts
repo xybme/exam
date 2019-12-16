@@ -1,7 +1,7 @@
 import { Injectable, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { IParamsResult } from '@/decorator/list-params.decorator'
+import { IParamsResult } from '@/common/decorator/list-params.decorator'
 import { QuestionEntity } from './question.entity';
 import { CreateQuestionDto } from './question.dto'
 
