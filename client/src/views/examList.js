@@ -22,7 +22,6 @@ export default class Index extends Component {
   showQrCode (examId) {
     let url = `/views/register?examId=${examId}`
     Taro.navigateTo({ url })
-    console.log(url);
   }
 
   updataExam (item, e) {

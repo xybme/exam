@@ -1,0 +1,55 @@
+@import "~taro-ui/dist/style/components/flex.scss";
+@import "~taro-ui/dist/style/components/list.scss";
+@import "~taro-ui/dist/style/components/input.scss";
+@import "~taro-ui/dist/style/components/loading.scss";
+@import "~taro-ui/dist/style/components/modal.scss";
+@import "~taro-ui/dist/style/components/pagination.scss";
+@import "~taro-ui/dist/style/components/button.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+@import "~taro-ui/dist/style/components/range.scss";
+@import "~taro-ui/dist/style/components/textarea.scss";
+@import "~taro-ui/dist/style/components/card.scss";
+
+
+body {
+  background: #fff;
+  font-size: 32px;
+}
+
+.at-modal__container {
+  width: 80% !important;
+}
+
+.bottom-btn-wrap {
+  height: 100px;
+  .bottom-btn {
+    position: fixed;
+    z-index: 10;
+    bottom: 0;
+    width: 100%;
+  }
+}
+
+.center-btn {
+  width: 80%;
+  margin: 30px auto;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding-left: 20px;
+  box-sizing: border-box;
+  margin: 30px 0;
+  .item {
+    border: 1px solid;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    margin-right: 30px;
+    border-radius: 10px;
+  }
+}

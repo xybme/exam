@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 
-export const API = process.env.NODE_ENV === 'development' ? 'http://192.168.50.161:3000/exam' : '/exam'
+export const API = process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:3000/exam' : '/exam'
 
 export default function fetch(options) {
   const { url, data = {}, method = 'POST', showToast = true, showLoading = false } = options

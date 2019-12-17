@@ -81,7 +81,6 @@ export default class Index extends Component {
      url: '/question/add',
      data: questionForm
     }).then(res => {
-      // Taro.navigateBack() 
       Taro.navigateTo({ url: '/views/questionList' })
       Taro.showToast({ title: res.message || '新增问题成功', icon: 'success' })
     })

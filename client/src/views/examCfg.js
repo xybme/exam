@@ -1,7 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import { AtInput, AtButton, AtForm, AtListItem, AtPagination } from 'taro-ui'
 import BaseMenu from '../components/BaseMent'
+import DELETE from '../assets/img/close.png'
 import '../assets/exam_cfg.scss'
 
 export default class Index extends Component {
@@ -18,7 +19,14 @@ export default class Index extends Component {
     examForm: {
       examName: '', 
       describe: '',
-      questionIds: ''
+      questionIds: []
+    }
+  }
+
+  componentDidMount () {
+    this.queryQuestionList()
+    if (this.$router.params.examId) {
+      this.getUpdateInfo()
     }
   }
 
@@ -36,23 +44,16 @@ export default class Index extends Component {
       method: 'GET',
       data: { currentPage, everyPage },
     }).then(res => {
-      let arr = res.rows.map(item => {
-        item.isCheck = false
-        return item
-      })
       this.setState({ 
-        questionArr: arr,
+        questionArr: res.rows,
         totalRecords: res.page.totalRecords
       })
     })
   }
 
   savaExamCfg () {
-    let { examForm, checkItemArr } = this.state
-    let idsArr = []
-    checkItemArr.map(item => {idsArr.push(item.id)})
-    examForm.questionIds = idsArr.join()
-    this.setState({ examForm })
+    let examForm = {...this.state.examForm}
+    examForm.questionIds = examForm.questionIds.join()
     if (!examForm.examName || !examForm.questionIds) {
       Taro.showToast({ title: '试劵名或试题集不能为空', icon: 'none' })
       return
@@ -60,28 +61,23 @@ export default class Index extends Component {
     const url = examForm.examId ? '/exam/update' : '/exam/add'
     Taro.fetch({
      url,
-     data: this.state.examForm
+     data: examForm
     }).then(res => {
       Taro.navigateTo({ url: '/views/examList' })
-      Taro.showToast({ title: res.message || '新增试卷成功', icon: 'success' })
+      Taro.showToast({ 
+        title: res.message || 
+        `${examForm.examId ? '修改' : '新增'}试卷成功`,
+        icon: 'success' 
+      })
     })
-  }
-
-  componentDidMount () {
-    this.queryQuestionList()
-    if (this.$router.params.examId) {
-      this.getUpdateInfo()
-    }
   }
 
   getUpdateInfo () {
     const query = this.$router.params
-    // let { questionArr } = this.state
     let questionIds = decodeURIComponent(query.questionIds).split(',')
     const examName = decodeURIComponent(query.examName)
     const describe = decodeURIComponent(query.describe)
     const examId = query.examId
-
     let examForm = { questionIds, examName, describe, examId }
 
     this.setState({ examForm })
@@ -90,13 +86,30 @@ export default class Index extends Component {
   checkItem (index) {
     let { questionArr, examForm } = this.state
     questionArr[index].isCheck = !questionArr[index].isCheck
-    let checkItemArr = questionArr.filter(item => item.isCheck)
+    let checkItemArr = questionArr.filter(item => !!item.isCheck)
     examForm.questionIds = []
-    checkItemArr.map(item => {
-      examForm.questionIds.push(item.questionName)
-    })
-    console.log(examForm.questionIds)
+    checkItemArr.map(item => { examForm.questionIds.push(item.id) })
     this.setState({ questionArr, checkItemArr, examForm })
+  }
+
+  // 问题id转为问题名称显示
+  getNameForId () {
+    const { questionArr, examForm } = this.state
+    let arr = []
+    questionArr.map(item => {
+      if (examForm.questionIds.includes(item.id)) {
+        arr.push(item.questionName)
+      }
+    })
+    return arr
+  }
+
+  // 删除已选的问题
+  deleteQuestionId (index) {
+    let { examForm, checkItemArr } = this.state
+    examForm.questionIds.splice(index, 1)
+    checkItemArr[index].isCheck = false
+    this.setState({ examForm, checkItemArr })
   }
   
   handleChange (name, value) {
@@ -125,7 +138,18 @@ export default class Index extends Component {
             value={examForm.describe}
             onChange={this.handleChange.bind(this, 'describe')}
           />
-          <View>{[...examForm.questionIds].join('，')}</View>
+          <View className='questions-pool'>
+            { this.getNameForId().map((item, index) => (
+              <View 
+                key={index}
+                className='item'
+                onClick={this.deleteQuestionId.bind(this, index)}
+              >
+                {item}
+                { item && <Image className='delete-icon' src={DELETE} />}
+              </View>
+            ))}
+          </View>
           {
             questionArr.map((item, index) => (
               <View className='question-item' key={index}>

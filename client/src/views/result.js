@@ -13,7 +13,6 @@ export default class Index extends Component {
   }
 
   toExamPage (item) {
-    // console.log(item)
     let params = serializeObj(item)
     Taro.navigateTo({ url: `/views/showExamResult?${params}` })
   }

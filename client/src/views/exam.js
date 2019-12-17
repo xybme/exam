@@ -50,18 +50,21 @@ export default class Index extends Component {
       let hasCheckAnswer = item.options.filter(option => !!option.isCheck)
 
       if (item.questionType == 1 && hasCheckAnswer.length) {
+        // 单选
         optionId = hasCheckAnswer[0].optionId
       } else if (item.questionType == 2 && hasCheckAnswer.length) {
+        // 多选
         let ids = []
         hasCheckAnswer.map(queiyId => { ids.push(queiyId.optionId) })
         optionId = ids.join()
       } else if (item.questionType == 3) {
+        // 问答
          text = item.text
       }
-      return [ item.questionType !== 3 ? {id, optionId} : {id, text} ]
+      return item.questionType !== 3 ? {id, optionId} : {id, text}
     })
-    let resultJson = JSON.stringify(result)
 
+    let resultJson = JSON.stringify(result)
     this.setState({ examList, resultJson })
   }
 
@@ -87,7 +90,6 @@ export default class Index extends Component {
   submitExam () {
     const { resultId } = this.$router.params
     let { resultJson } = this.state
-    console.log(resultJson);
     Taro.fetch({
       url: '/result/update',
       data: { resultId: Number(resultId), resultJson }
