@@ -83,10 +83,10 @@ export default class Index extends Component {
       <View className='question-list'>
         <BaseMenu title='题目列表' />
         <View className='search-form'>
-          <Picker mode='selector' range={questionTypeArr} onChange={this.onDateChange.bind(this, 'questionType')}>
+          <Picker className='picker' mode='selector' range={questionTypeArr} onChange={this.onDateChange.bind(this, 'questionType')}>
             <View className='item'>{ questionTypeArr[searchForm.questionType - 1] || '题目类型' }</View>
           </Picker>
-          <Picker mode='selector' range={positonNameArr} onChange={this.onDateChange.bind(this, 'positionId')}>
+          <Picker className='picker' mode='selector' range={positonNameArr} onChange={this.onDateChange.bind(this, 'positionId')}>
             <View className='item'>{positonNameArr[searchForm.positionId - 1] || '职位'}</View>
           </Picker>
           <AtButton type='primary'  onClick={this.addQuestion.bind(this)}>新增问题</AtButton>
@@ -103,12 +103,16 @@ export default class Index extends Component {
             ))
           }
         </AtList>
-        <AtPagination 
-          total={totalRecords} 
-          pageSize={10}
-          onPageChange={this.changePage.bind(this)}
-          current={currentPage}
-        />
+        <View style='height: 60px'>
+          <View className='flex-bottom'>      
+            <AtPagination 
+              total={totalRecords} 
+              pageSize={10}
+              onPageChange={this.changePage.bind(this)}
+              current={currentPage}
+            />
+          </View>
+        </View>
       </View>
     )
   }

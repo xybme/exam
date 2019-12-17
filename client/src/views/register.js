@@ -14,13 +14,12 @@ export default class Index extends Component {
       examId: Number(this.$router.params.examId),
       applicant: '',
       telephone: '',
-      salaryMin: '',
-      salaryMax: ''
+      salaryMin: 0,
+      salaryMax: 0
     }
   }
   
   handleChange (name, value) {
-    console.log(name, value)
     let { form } = this.state
     if (name === 'range') {
       form.salaryMin = value[0]
@@ -41,7 +40,6 @@ export default class Index extends Component {
       Taro.showToast({ title: '请输入正确的手机号', icon: 'none'})
       return
     }
-    console.log(form);
     Taro.fetch({
      url: '/result/add',
      data: form
@@ -77,8 +75,8 @@ export default class Index extends Component {
             <AtRange
               sliderStyle='background: #6290E9'
               value={[0, 0]}
-              min={1000}
-              max={30000}
+              min={0}
+              max={50000}
               onChange={this.handleChange.bind(this, 'range')}
             />
           </View>

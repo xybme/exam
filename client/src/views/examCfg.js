@@ -79,7 +79,7 @@ export default class Index extends Component {
     const describe = decodeURIComponent(query.describe)
     const examId = query.examId
     let examForm = { questionIds, examName, describe, examId }
-
+    
     this.setState({ examForm })
   }
 
