@@ -1,5 +1,0 @@
-{"path":"GET -> /exam/exam/findById?examId=1","time":1576484843340,"level":"info"}
-{"path":"POST -> /exam/auth/login","time":1576570320814,"level":"info"}
-{"path":"GET -> /exam/exam/list","time":1576570320956,"level":"info"}
-{"path":"GET -> /exam/result/list","time":1576570327805,"level":"info"}
-{"path":"GET -> /exam/exam/findById?examId=4","time":1576570328743,"level":"info"}
