@@ -68,7 +68,7 @@ const config = {
     }
   },
   h5: {
-    publicPath: '/',
+    publicPath: '/interview/',
     staticDirectory: 'static',
     module: {
       postcss: {
