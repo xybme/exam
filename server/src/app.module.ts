@@ -6,7 +6,7 @@ import { AppService } from './app.service';
 // 数据库
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
-import { DB_CONFIG } from '@/app.config'
+import { DB_CONFIG } from './app.config'
 // 模块
 import { ExamModule } from './modules/exam/exam.module';
 import { PositionModule } from './modules/position/postion.module'

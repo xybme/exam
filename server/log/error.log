@@ -21,3 +21,4 @@
 {"path":"/exam/position/queryAll","method":"GET","status":401,"message":"error未通过token认证","params":"","time":"2019-12-14 15:42:50","ip":"::ffff:192.168.70.180","level":"error"}
 {"path":"/exam/result/list","method":"GET","status":401,"message":"errortoken过期","params":"","time":"2019-12-14 16:45:56","ip":"::ffff:192.168.70.180","level":"error"}
 {"path":"/exam/result/list","method":"GET","status":401,"message":"errortoken过期","params":"","time":"2019-12-14 17:29:05","ip":"::ffff:192.168.70.180","level":"error"}
+{"path":"/favicon.ico","method":"GET","status":404,"message":"errorCannot GET /favicon.ico","params":"","time":"2019-12-16 16:27:23","ip":"::1","level":"error"}
