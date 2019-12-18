@@ -34,12 +34,6 @@ export default class Index extends Component {
   componentDidMount () {
   }
 
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
-
   queryQuestionList () {
     let { currentPage, searchForm } = this.state
     Taro.fetch({

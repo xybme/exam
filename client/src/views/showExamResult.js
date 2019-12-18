@@ -15,7 +15,50 @@ export default class Index extends Component {
     examInfo: {}
   }
   componentDidMount () {
-    this.queryExam()
+    this.queryResult()
+  }
+
+  queryResult () {
+    const resultJson = new Promise(resolve => {
+      Taro.fetch({
+        url: '/result/findById',
+        method: 'GET',
+        data: { resultId: this.$router.params.resultId }
+      }).then(result => {
+        let resultArr = JSON.parse(result.attr.resultJson)
+        resolve(resultArr)
+      })
+    })
+    resultJson.then(data => {
+      this.queryExamInfo(data)
+    })
+  }
+
+  showAnswer (res, resultArr) {
+    res.rows.map(item => {
+     resultArr && resultArr.map(ele => {
+        if (item.id == ele.id) {
+          item.options.map(subItem => {
+            if (item.questionType === 1) {
+              // 单选回显
+              if (ele.optionId === subItem.optionId) {
+                subItem.isCheck = true
+              }
+            }
+            if (item.questionType === 2) {
+              // 多选回显
+              if (ele.optionId.split(',').map(Number).includes(subItem.optionId)) {
+                subItem.isCheck = true
+              }
+            }
+          })
+          if (item.questionType === 3) {
+            // 问答回显
+            item.text = ele.text
+          }
+        }
+      })
+    })
   }
 
   // 获取正确答案
@@ -33,50 +76,29 @@ export default class Index extends Component {
     return result
   }
 
-  queryExam () {
-    let { resultJson, examId } = this.$router.params
-    resultJson = decodeURIComponent(resultJson)
-    let resultArr = JSON.parse(resultJson)
+  queryExamInfo (data) {
+    let { examId, resultId } = this.$router.params
     Taro.fetch({
       url: '/exam/findById',
       method: 'GET',
       data: { examId }
     }).then(res => {
-      res.rows.map(item => {
-        resultArr.map(ele => {
-          if (item.id == ele.id) {
-            item.options.map(subItem => {
-              if (item.questionType === 1) {
-                if (ele.optionId === subItem.optionId) {
-                  subItem.isCheck = true
-                }
-              }
-              if (item.questionType === 2) {
-                if (ele.optionId.split(',').map(Number).includes(subItem.optionId)) {
-                  subItem.isCheck = true
-                }
-              }
-            })
-            if (item.questionType === 3) {
-              item.text = ele.text
-            }
-          }
-        })
-      })
-      this.setState({ 
+      this.showAnswer(res, data)
+      this.setState({
         examInfo: res.attr,
         examList: res.rows
       })
     })
   }
 
-
   render () {
     const { examList, examInfo, answerLabel } = this.state
     return (
       <View className='exam-page exam-result-page'>
         <BaseMenu title='答题结果' />
-        <View className='exam-info'>{examInfo}</View>
+        <View className='exam-info'>
+          {/* {examInfo.examName} */}
+        </View>
         <View>
           { examList.map((item, index) => (
             <View className='question-item' key={index}>
