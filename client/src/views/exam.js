@@ -42,30 +42,8 @@ export default class Index extends Component {
     } else if (questionType == 2) {
       options[subI].isCheck = !options[subI].isCheck
     }
-    
-    let result = examList.map(item => {
-      let id = item.id
-      let optionId = ''
-      let text = ''
-      let hasCheckAnswer = item.options.filter(option => !!option.isCheck)
 
-      if (item.questionType == 1 && hasCheckAnswer.length) {
-        // 单选
-        optionId = hasCheckAnswer[0].optionId
-      } else if (item.questionType == 2 && hasCheckAnswer.length) {
-        // 多选
-        let ids = []
-        hasCheckAnswer.map(queiyId => { ids.push(queiyId.optionId) })
-        optionId = ids.join()
-      } else if (item.questionType == 3) {
-        // 问答
-         text = item.text
-      }
-      return item.questionType !== 3 ? {id, optionId} : {id, text}
-    })
-
-    let resultJson = JSON.stringify(result)
-    this.setState({ examList, resultJson })
+    this.setState({ examList })
   }
 
   queryExam () {
@@ -89,7 +67,30 @@ export default class Index extends Component {
 
   submitExam () {
     const { resultId } = this.$router.params
-    let { resultJson } = this.state
+    let { examList } = this.state
+    let result = examList.map(item => {
+      let id = item.id
+      let optionId = ''
+      let text = ''
+      let hasCheckAnswer = item.options.filter(option => !!option.isCheck)
+      if (item.questionType == 1 && hasCheckAnswer.length) {
+        // 单选
+        optionId = hasCheckAnswer[0].optionId
+      } else if (item.questionType == 2 && hasCheckAnswer.length) {
+        // 多选
+        let ids = []
+        hasCheckAnswer.map(queiyId => { ids.push(queiyId.optionId) })
+        optionId = ids.join()
+      } else if (item.questionType == 3) {
+        // 问答
+         text = item.text
+      }
+      return item.questionType !== 3 ? {id, optionId} : {id, text}
+    })
+    let resultJson = JSON.stringify(result)
+    this.setState({ resultJson })
+    console.log(resultJson)
+    
     Taro.fetch({
       url: '/result/update',
       data: { resultId: Number(resultId), resultJson }

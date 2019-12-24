@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Picker } from '@tarojs/components'
-import { AtList, AtListItem, AtButton, AtPagination } from "taro-ui"
+import { AtList, AtListItem, AtButton, AtPagination, AtAccordion } from "taro-ui"
 import BaseMenu from '../components/BaseMent'
 import '../assets/question_list.scss'
 
@@ -67,6 +67,12 @@ export default class Index extends Component {
     })
   }
 
+  openAnswer (index) {
+    let { questionArr } = this.state
+    questionArr[index].open = !questionArr[index].open
+    this.setState({ questionArr })
+  }
+
   addQuestion () {
     Taro.navigateTo({ url: '/views/addQuestion' })
   }
@@ -83,20 +89,27 @@ export default class Index extends Component {
           <Picker className='picker' mode='selector' range={positonNameArr} onChange={this.onDateChange.bind(this, 'positionId')}>
             <View className='item'>{positonNameArr[searchForm.positionId - 1] || '职位'}</View>
           </Picker>
-          <AtButton type='primary'  onClick={this.addQuestion.bind(this)}>新增问题</AtButton>
+          <View className='add-btn' onClick={this.addQuestion.bind(this)}>新增问题</View>
         </View>
-        <AtList>
-          {
-            questionArr.map((item, index) => (
-              <AtListItem 
-                key={index} 
-                title={item.questionName} 
-                note={questionTypeArr[item.questionType - 1]} 
-                extraText={positonNameArr[item.positionId - 1] || '职位'}
-              />
-            ))
-          }
-        </AtList>
+        {
+          questionArr.map((item, index) => (
+            <AtAccordion
+              open={!!item.open}
+              onClick={this.openAnswer.bind(this, index)}
+              title={item.questionName}
+            >
+              <AtList hasBorder={false}>
+                { item.questionType == 3 && <AtListItem title='问答题无标准答案' /> }
+                { item.questionType !==3 && item.options.map((answer, subI) => (
+                  <AtListItem
+                    title={answer.optionName}
+                    note={answer.isRight === 1 ? '正确答案' : '错误答案'}
+                  />
+                ))}
+              </AtList>
+            </AtAccordion>
+          ))
+        }
         <View style='height: 60px'>
           <View className='flex-bottom'>      
             <AtPagination 

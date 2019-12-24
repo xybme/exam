@@ -1,7 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
 import { AtCard, AtButton, AtListItem, AtTextarea } from "taro-ui"
-import CHECK_ICON from '../assets/img/check_icon.png'
 import BaseMenu from '../components/BaseMent'
 import '../assets/exam.scss'
 
@@ -112,9 +111,6 @@ export default class Index extends Component {
                     <View  className={answer.isCheck ? 'options checkedbg' : 'options'}>
                       <View className='index'>{answerLabel[subI]}.</View>
                       <AtListItem className={answer.isCheck && 'checked'} title={answer.optionName} />
-                      { answer.isCheck && 
-                        <Image src={CHECK_ICON} className='check'></Image>
-                      }
                     </View>
                   </View>
                 ))}
