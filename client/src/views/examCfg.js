@@ -68,17 +68,17 @@ export default class Index extends Component {
     }
     const url = examForm.examId ? '/exam/update' : '/exam/add'
     console.log(examForm)
-    // Taro.fetch({
-    //  url,
-    //  data: examForm
-    // }).then(res => {
-    //   Taro.navigateTo({ url: '/views/examList' })
-    //   Taro.showToast({ 
-    //     title: res.message || 
-    //     `${examForm.examId ? '修改' : '新增'}试卷成功`,
-    //     icon: 'success' 
-    //   })
-    // })
+    Taro.fetch({
+     url,
+     data: examForm
+    }).then(res => {
+      Taro.navigateTo({ url: '/views/examList' })
+      Taro.showToast({ 
+        title: res.message || 
+        `${examForm.examId ? '修改' : '新增'}试卷成功`,
+        icon: 'success' 
+      })
+    })
   }
 
   // 回显选中的答案
