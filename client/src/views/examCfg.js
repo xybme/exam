@@ -10,16 +10,17 @@ export default class Index extends Component {
     navigationBarTitleText: '新增试卷'
   }
   state = {
+    query: this.$router.params,
     questionTypeArr: ['', '单选', '多选', '问答'],
     questionArr: [],
-    checkItemArr: [], // 已选中的问题
+    selectQuestionsIds: [],
     currentPage: 1,
     totalRecords: 0,
     everyPage: 10,
     examForm: {
-      examName: '', 
-      describe: '',
-      questionIds: []
+      examName: '1', 
+      describe: '2',
+      questionIds: ''
     }
   }
 
@@ -38,14 +39,21 @@ export default class Index extends Component {
   }
 
   queryQuestionList () {
-    let { currentPage, everyPage } = this.state
+    let { currentPage, everyPage, query } = this.state
     Taro.fetch({
       url: '/question/list',
       method: 'GET',
       data: { currentPage, everyPage },
     }).then(res => {
+      let questionIds = decodeURIComponent(query.questionIds).split(',').map(Number)
+      let arr = res.rows.map(item => {
+        if (questionIds.includes(item.id)) {
+          item.isCheck = true
+        }
+        return item
+      })
       this.setState({ 
-        questionArr: res.rows,
+        questionArr: query.examId ? arr : res.rows,
         totalRecords: res.page.totalRecords
       })
     })
@@ -53,51 +61,60 @@ export default class Index extends Component {
 
   savaExamCfg () {
     let examForm = {...this.state.examForm}
-    examForm.questionIds = examForm.questionIds.join()
+    examForm.questionIds = this.state.selectQuestionsIds.join()
     if (!examForm.examName || !examForm.questionIds) {
       Taro.showToast({ title: '试劵名或试题集不能为空', icon: 'none' })
       return
     }
     const url = examForm.examId ? '/exam/update' : '/exam/add'
-    Taro.fetch({
-     url,
-     data: examForm
-    }).then(res => {
-      Taro.navigateTo({ url: '/views/examList' })
-      Taro.showToast({ 
-        title: res.message || 
-        `${examForm.examId ? '修改' : '新增'}试卷成功`,
-        icon: 'success' 
-      })
-    })
+    console.log(examForm)
+    // Taro.fetch({
+    //  url,
+    //  data: examForm
+    // }).then(res => {
+    //   Taro.navigateTo({ url: '/views/examList' })
+    //   Taro.showToast({ 
+    //     title: res.message || 
+    //     `${examForm.examId ? '修改' : '新增'}试卷成功`,
+    //     icon: 'success' 
+    //   })
+    // })
   }
 
+  // 回显选中的答案
   getUpdateInfo () {
-    const query = this.$router.params
-    let questionIds = decodeURIComponent(query.questionIds).split(',')
+    const { query } = this.state
+    let questionIds = decodeURIComponent(query.questionIds).split(',').map(Number)
     const examName = decodeURIComponent(query.examName)
     const describe = decodeURIComponent(query.describe)
     const examId = query.examId
-    let examForm = { questionIds, examName, describe, examId }
-    
-    this.setState({ examForm })
+    let examForm = { examName, describe, examId }
+
+    this.setState({ 
+      examForm,
+      selectQuestionsIds: [...questionIds, ...this.state.selectQuestionsIds]
+    })
   }
 
   checkItem (index) {
-    let { questionArr, examForm } = this.state
-    questionArr[index].isCheck = !questionArr[index].isCheck
+    let { questionArr, selectQuestionsIds } = this.state
+    // questionArr[index].isCheck = !questionArr[index].isCheck
+    questionArr[index].isCheck = true
     let checkItemArr = questionArr.filter(item => !!item.isCheck)
-    examForm.questionIds = []
-    checkItemArr.map(item => { examForm.questionIds.push(item.id) })
-    this.setState({ questionArr, checkItemArr, examForm })
+    checkItemArr.map((item) => { 
+      if (!selectQuestionsIds.includes(item.id)) {
+        selectQuestionsIds.push(item.id)
+      }
+    })
+    this.setState({ questionArr, selectQuestionsIds })
   }
 
   // 问题id转为问题名称显示
   getNameForId () {
-    const { questionArr, examForm } = this.state
+    const { questionArr, selectQuestionsIds } = this.state
     let arr = []
     questionArr.map(item => {
-      if (examForm.questionIds.includes(item.id)) {
+      if (selectQuestionsIds.includes(item.id)) {
         arr.push(item.questionName)
       }
     })
@@ -106,10 +123,11 @@ export default class Index extends Component {
 
   // 删除已选的问题
   deleteQuestionId (index) {
-    let { examForm, checkItemArr } = this.state
-    examForm.questionIds.splice(index, 1)
+    let { selectQuestionsIds, questionArr } = this.state
+    let checkItemArr = questionArr.filter(item => !!item.isCheck)
+    selectQuestionsIds.splice(index, 1)
     checkItemArr[index].isCheck = false
-    this.setState({ examForm, checkItemArr })
+    this.setState({ questionArr, selectQuestionsIds })
   }
   
   handleChange (name, value) {

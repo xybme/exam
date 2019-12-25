@@ -219,7 +219,7 @@ export default class Index extends Component {
               </AtSwipeAction>
             ))
           }
-          <View className='tips'>tips: 左滑上面的选项弹出新增/删除</View>
+          <View className='tips'>tips: 往左滑上面的选项弹出新增/删除</View>
           <AtButton className='center-btn' type='primary' size='normal' onClick={this.savaExamCfg.bind(this)}>保存题目配置</AtButton>
         </AtForm>
       </View>
