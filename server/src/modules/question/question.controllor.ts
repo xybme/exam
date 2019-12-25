@@ -40,4 +40,9 @@ export class QuestionControllor {
   }) params: IParamsResult) {
     return await this.questionService.find(params)
   }
+
+  @Get('queryByIds')
+  async queryByIds(@Query('questionIds') questionIds: string) {
+    return await this.questionService.findByIds(questionIds.split(','))
+  }
 }
