@@ -87,6 +87,7 @@ export default class Index extends Component {
             />
           ))}
         </AtList>
+        {!positionArr.length && <View className='nodata'>暂无数据</View>}
         {
           isShowModal &&   <AtModal isOpened>
           <AtModalHeader>{ isUpdate ? '修改职位名称' : '新增职位'}</AtModalHeader>

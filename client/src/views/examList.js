@@ -62,6 +62,7 @@ export default class Index extends Component {
             </View>
           ))}
         </AtList>
+        {!examList.length && <View className='nodata'>暂无数据</View>}
         <View className='bottom-btn-wrap'>
           <AtButton className='bottom-btn' type='primary' onClick={this.addExam.bind(this)}>新增试卷</AtButton>
         </View>

@@ -110,6 +110,7 @@ export default class Index extends Component {
             </AtAccordion>
           ))
         }
+        {!questionArr.length && <View className='nodata'>暂无数据</View>}
         <View style='height: 60px'>
           <View className='flex-bottom'>      
             <AtPagination 

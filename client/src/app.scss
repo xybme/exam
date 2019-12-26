@@ -16,6 +16,14 @@ body {
   font-size: 32px;
 }
 
+.nodata {
+  color: #999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .at-modal__container {
   width: 80% !important;
 }

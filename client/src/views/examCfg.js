@@ -193,12 +193,17 @@ export default class Index extends Component {
               </View>
             ))
           }
-            <AtPagination 
-              total={totalRecords} 
-              pageSize={10}
-              onPageChange={this.changePage.bind(this)}
-              current={currentPage}
-            />
+          <View style='height: 60px'>
+            <View className='flex-bottom' style='bottom: 50px'>      
+              <AtPagination 
+                total={totalRecords} 
+                pageSize={10}
+                onPageChange={this.changePage.bind(this)}
+                current={currentPage}
+              />
+            </View>
+          </View>
+        
           <View className='bottom-btn-wrap'>   
             <AtButton 
               type='primary' 
