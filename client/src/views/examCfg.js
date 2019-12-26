@@ -183,7 +183,7 @@ export default class Index extends Component {
           </View>
           {
             questionArr.map((item, index) => (
-              <View className='question-item' key={index}>
+              <View key={index}>
                 <AtListItem 
                   onClick={this.checkItem.bind(this, index, item.id)} 
                   className={item.isCheck && 'check-item'} 

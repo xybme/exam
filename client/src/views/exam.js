@@ -10,7 +10,7 @@ export default class Index extends Component {
     navigationBarTitleText: '试卷'
   }
   state = {
-    isEnd: false,
+    isAnswered: false,
     questionTypeArr: ['', '单选', '多选', '问答'],
     answerLabel: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
     examList: [],
@@ -47,9 +47,9 @@ export default class Index extends Component {
   }
 
   queryExam () {
-    let hasIsEnd = window.localStorage.getItem('isEnd')
-    if (hasIsEnd) {
-      this.setState({ isEnd: true })
+    let hasIsAnswered = window.localStorage.getItem('isAnswered')
+    if (hasIsAnswered) {
+      this.setState({ isAnswered: true })
     } else {
       const { examId } = this.$router.params
       Taro.fetch({
@@ -95,13 +95,14 @@ export default class Index extends Component {
       url: '/result/update',
       data: { resultId: Number(resultId), resultJson }
     }).then(() => {
-      this.setState({ isEnd: true })
-      window.localStorage.setItem('isEnd', this.state.isEnd)
+      this.setState({ isAnswered: true }, () => {
+        window.localStorage.setItem('isAnswered', this.state.isAnswered)
+      })
     })
   }
 
   render () {
-    const { examList, questionTypeArr, examInfo, answerLabel, isEnd } = this.state
+    const { examList, questionTypeArr, examInfo, answerLabel, isAnswered } = this.state
     return (
       <View className='exam-page'>
         <View className='exam-title'>{examInfo.examName}</View>
@@ -120,8 +121,8 @@ export default class Index extends Component {
                     onClick={this.chooseAnswer.bind(this, index, subI, item.questionType)}
                   >
                     <View className='index'>{answerLabel[subI]}.</View>
-                    <AtListItem className={answer.isCheck && 'checked'} title={answer.optionName} />
-                    { answer.isCheck &&  <Image src={CHECK_ICON} className='check'>选择了</Image>}
+                    <AtListItem className='exam-list-item' title={answer.optionName} />
+                    {answer.isCheck &&  <Image src={CHECK_ICON} className='check'/>}
                   </View>
                 ))}
                 { item.questionType == 3 && 
@@ -142,14 +143,14 @@ export default class Index extends Component {
             type='primary'
             onClick={this.submitExam.bind(this)}
           >
-            提交
+            确认提交
           </AtButton>
         }
         {
-          isEnd && 
+          isAnswered && 
           <View className='submit-success'>
             <View className='tips'>
-              <View>您已答题完成, 请关闭本页面</View>
+              <View>您已完成答题， 静候佳音吧。 现在直接关闭本页面即可</View>
             </View>
           </View>
         }
