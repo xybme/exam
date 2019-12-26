@@ -19,8 +19,8 @@ export default class Index extends Component {
     totalRecords: 0,
     everyPage: 10,
     examForm: {
-      examName: '1', 
-      describe: '2',
+      examName: '', 
+      describe: '',
       questionIds: ''
     }
   }
@@ -135,7 +135,6 @@ export default class Index extends Component {
 
     byIdsQuestions[index].isCheck = false
     this.setState({ questionArr, selectQuestionsIds }, () => {
-      this.queryByIds()
       this.queryQuestionList()
     })
   }
