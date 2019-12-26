@@ -121,13 +121,13 @@ export default class Index extends Component {
             </View>
           </View>
           <View>所答试卷: {examInfo.examName}</View>
-          <View>期望薪资: {userInfo.salaryMin / 100000}k ~ {userInfo.salaryMax / 10000}k</View>
+          <View>期望薪资: {userInfo.salaryMin / 1000}k ~ {userInfo.salaryMax / 1000}k</View>
           <View>答题开始时间: {userInfo.startTime}</View>
           <View>答题结束时间: {userInfo.endTime}</View>
         </View>
         <View>
           { examList.map((item, index) => (
-            <View className='question-item' key={index}>
+            <View key={index}>
               <AtCard 
                 isFull 
                 title={`${index+1}、${item.questionName}`}

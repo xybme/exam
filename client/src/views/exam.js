@@ -108,7 +108,7 @@ export default class Index extends Component {
         <View className='exam-title'>{examInfo.examName}</View>
         <View>
           { examList.map((item, index) => (
-            <View className='question-item' key={index}>
+            <View key={index}>
               <AtCard 
                 isFull 
                 title={`${index+1}、${item.questionName}`}
