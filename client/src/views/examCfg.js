@@ -13,6 +13,7 @@ export default class Index extends Component {
     query: this.$router.params,
     questionTypeArr: ['', '单选', '多选', '问答'],
     questionArr: [],
+    byIdsQuestions: [],
     selectQuestionsIds: [],
     currentPage: 1,
     totalRecords: 0,
@@ -25,11 +26,13 @@ export default class Index extends Component {
   }
 
   componentDidMount () {
-    this.queryQuestionList()
     if (this.$router.params.examId) {
       this.getUpdateInfo()
+    } else {
+      this.queryQuestionList()
     }
   }
+  
 
   changePage (response) {
     let currentPage = response.current
@@ -39,21 +42,22 @@ export default class Index extends Component {
   }
 
   queryQuestionList () {
-    let { currentPage, everyPage, query } = this.state
+    let { currentPage, everyPage, query, selectQuestionsIds } = this.state
     Taro.fetch({
       url: '/question/list',
       method: 'GET',
       data: { currentPage, everyPage },
     }).then(res => {
-      let questionIds = decodeURIComponent(query.questionIds).split(',').map(Number)
-      let arr = res.rows.map(item => {
-        if (questionIds.includes(item.id)) {
+      let idsArr = selectQuestionsIds
+      res.rows.map(item => {
+        if (idsArr.includes(item.id)) {
           item.isCheck = true
         }
         return item
       })
-      this.setState({ 
-        questionArr: query.examId ? arr : res.rows,
+      this.queryByIds()
+      this.setState({
+        questionArr: res.rows,
         totalRecords: res.page.totalRecords
       })
     })
@@ -84,7 +88,7 @@ export default class Index extends Component {
   // 回显选中的答案
   getUpdateInfo () {
     const { query } = this.state
-    let questionIds = decodeURIComponent(query.questionIds).split(',').map(Number)
+    let queryIds = decodeURIComponent(query.questionIds).split(',').map(Number)
     const examName = decodeURIComponent(query.examName)
     const describe = decodeURIComponent(query.describe)
     const examId = query.examId
@@ -92,13 +96,14 @@ export default class Index extends Component {
 
     this.setState({ 
       examForm,
-      selectQuestionsIds: [...questionIds, ...this.state.selectQuestionsIds]
+      selectQuestionsIds: [...queryIds, ...this.state.selectQuestionsIds]
+    }, () => {
+      this.queryQuestionList()
     })
   }
 
   checkItem (index) {
     let { questionArr, selectQuestionsIds } = this.state
-    // questionArr[index].isCheck = !questionArr[index].isCheck
     questionArr[index].isCheck = true
     let checkItemArr = questionArr.filter(item => !!item.isCheck)
     checkItemArr.map((item) => { 
@@ -106,28 +111,33 @@ export default class Index extends Component {
         selectQuestionsIds.push(item.id)
       }
     })
+    this.queryByIds()
     this.setState({ questionArr, selectQuestionsIds })
   }
 
-  // 问题id转为问题名称显示
-  getNameForId () {
-    const { questionArr, selectQuestionsIds } = this.state
-    let arr = []
-    questionArr.map(item => {
-      if (selectQuestionsIds.includes(item.id)) {
-        arr.push(item.questionName)
-      }
+  queryByIds () {
+    const { selectQuestionsIds, query } = this.state
+    let questionIds = selectQuestionsIds.join()
+    Taro.fetch({
+      url: '/question/queryByIds',
+      method: 'GET',
+      data: { questionIds }
+    }).then(res => {
+      this.setState({ byIdsQuestions: res.rows })
     })
-    return arr
   }
 
   // 删除已选的问题
-  deleteQuestionId (index) {
-    let { selectQuestionsIds, questionArr } = this.state
-    let checkItemArr = questionArr.filter(item => !!item.isCheck)
-    selectQuestionsIds.splice(index, 1)
-    checkItemArr[index].isCheck = false
-    this.setState({ questionArr, selectQuestionsIds })
+  deleteQuestionId (index, id) {
+    let { selectQuestionsIds, questionArr, byIdsQuestions } = this.state
+    let i = selectQuestionsIds.indexOf(id)
+    selectQuestionsIds.splice(i, 1)
+
+    byIdsQuestions[index].isCheck = false
+    this.setState({ questionArr, selectQuestionsIds }, () => {
+      this.queryByIds()
+      this.queryQuestionList()
+    })
   }
   
   handleChange (name, value) {
@@ -137,7 +147,7 @@ export default class Index extends Component {
   }
 
   render () {
-    const { examForm, questionArr, questionTypeArr, currentPage, totalRecords } = this.state
+    const { examForm, questionArr, questionTypeArr, currentPage, totalRecords, byIdsQuestions } = this.state
     return (
       <View className='exam-cfg-page' >
         <BaseMenu title={examForm.examId ? '修改试卷' : '新增试卷'} />
@@ -157,13 +167,13 @@ export default class Index extends Component {
             onChange={this.handleChange.bind(this, 'describe')}
           />
           <View className='questions-pool'>
-            { this.getNameForId().map((item, index) => (
+            { byIdsQuestions.map((item, index) => (
               <View 
                 key={index}
                 className='item'
-                onClick={this.deleteQuestionId.bind(this, index)}
+                onClick={this.deleteQuestionId.bind(this, index, item.id)}
               >
-                {item}
+                {item.questionName}
                 { item && <Image className='delete-icon' src={DELETE} />}
               </View>
             ))}
