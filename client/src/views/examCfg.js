@@ -71,7 +71,6 @@ export default class Index extends Component {
       return
     }
     const url = examForm.examId ? '/exam/update' : '/exam/add'
-    console.log(examForm)
     Taro.fetch({
      url,
      data: examForm
@@ -102,9 +101,15 @@ export default class Index extends Component {
     })
   }
 
-  checkItem (index) {
+  checkItem (index, id) {
     let { questionArr, selectQuestionsIds } = this.state
-    questionArr[index].isCheck = true
+    questionArr[index].isCheck = !questionArr[index].isCheck 
+    // 取消选择
+    let i = selectQuestionsIds.indexOf(id)
+    if (!questionArr[index].isCheck) {
+      selectQuestionsIds.splice(i, 1)
+    }
+    // 向选项池id数组push
     let checkItemArr = questionArr.filter(item => !!item.isCheck)
     checkItemArr.map((item) => { 
       if (!selectQuestionsIds.includes(item.id)) {
@@ -128,13 +133,12 @@ export default class Index extends Component {
   }
 
   // 删除已选的问题
-  deleteQuestionId (index, id) {
-    let { selectQuestionsIds, questionArr, byIdsQuestions } = this.state
+  deleteQuestionId (id) {
+    let { selectQuestionsIds } = this.state
     let i = selectQuestionsIds.indexOf(id)
     selectQuestionsIds.splice(i, 1)
 
-    byIdsQuestions[index].isCheck = false
-    this.setState({ questionArr, selectQuestionsIds }, () => {
+    this.setState({ selectQuestionsIds }, () => {
       this.queryQuestionList()
     })
   }
@@ -170,7 +174,7 @@ export default class Index extends Component {
               <View 
                 key={index}
                 className='item'
-                onClick={this.deleteQuestionId.bind(this, index, item.id)}
+                onClick={this.deleteQuestionId.bind(this, item.id)}
               >
                 {item.questionName}
                 { item && <Image className='delete-icon' src={DELETE} />}
@@ -181,7 +185,7 @@ export default class Index extends Component {
             questionArr.map((item, index) => (
               <View className='question-item' key={index}>
                 <AtListItem 
-                  onClick={this.checkItem.bind(this, index)} 
+                  onClick={this.checkItem.bind(this, index, item.id)} 
                   className={item.isCheck && 'check-item'} 
                   title={item.questionName} 
                   extraText={questionTypeArr[item.questionType]} 
